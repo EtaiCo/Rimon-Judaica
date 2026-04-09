@@ -13,7 +13,6 @@ export interface Product {
   name: string;
   slug: string;
   description: string;
-  imageUrl: string;
   createdAt: string;
 }
 
@@ -24,6 +23,7 @@ export interface ProductVariant {
   price: number;
   stockQuantity: number;
   sku: string;
+  imageUrl?: string;
 }
 
 export type ProductWithVariants = Product & {

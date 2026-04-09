@@ -16,7 +16,7 @@ router.get("/", async (_req, res) => {
 
   const { data: productRows, error: prodErr } = await supabaseAdmin
     .from("products")
-    .select("id, category_id, name, slug, description, image_url, created_at")
+    .select("id, category_id, name, slug, description, created_at")
     .order("created_at", { ascending: false });
 
   if (prodErr) {
@@ -28,7 +28,7 @@ router.get("/", async (_req, res) => {
 
   const { data: variantRows, error: varErr } = await supabaseAdmin
     .from("product_variants")
-    .select("id, product_id, variant_name, price, stock_quantity, sku")
+    .select("id, product_id, variant_name, price, stock_quantity, sku, image_url")
     .in("product_id", productIds);
 
   if (varErr) {
@@ -45,6 +45,7 @@ router.get("/", async (_req, res) => {
       price: Number(v.price),
       stockQuantity: v.stock_quantity,
       sku: v.sku,
+      imageUrl: v.image_url ?? undefined,
     };
     const list = variantsByProduct.get(variant.productId) ?? [];
     list.push(variant);
@@ -60,7 +61,6 @@ router.get("/", async (_req, res) => {
       name: p.name,
       slug: p.slug,
       description: p.description,
-      imageUrl: p.image_url,
       createdAt: p.created_at,
       variants,
       minPrice: prices.length > 0 ? Math.min(...prices) : undefined,
