@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.turbo/
+.env
+*.local
+
+.DS_Store
+Thumbs.db
+
+.vscode/
+!.vscode/extensions.json
+.idea/
+
+npm-debug.log*
+pnpm-debug.log*
+
+DB.txt

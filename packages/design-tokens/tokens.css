@@ -1,0 +1,90 @@
+:root {
+  /* ── Brand Colors ── */
+  --color-primary: #2C1A0E;
+  --color-primary-light: #4A2E1A;
+  --color-primary-dark: #1A0F08;
+  --color-accent: #D4AF37;
+  --color-accent-light: #E5C76A;
+  --color-accent-dark: #B8941F;
+  --color-background: #FAF8F2;
+  --color-background-dark: #F0EDE0;
+  --color-cream: #FAF8F2;
+  --color-cream-dark: #F0EDE0;
+
+  /* ── Neutral Colors ── */
+  --color-white: #FFFFFF;
+  --color-black: #1A1A1A;
+  --color-gray-100: #F7F7F5;
+  --color-gray-200: #E8E8E4;
+  --color-gray-300: #D4D4D0;
+  --color-gray-400: #A3A3A0;
+  --color-gray-500: #737370;
+  --color-gray-600: #525250;
+  --color-gray-700: #404040;
+  --color-gray-800: #262626;
+
+  /* ── Semantic Colors ── */
+  --color-text-primary: var(--color-primary);
+  --color-text-secondary: var(--color-gray-600);
+  --color-text-inverse: var(--color-white);
+  --color-text-accent: var(--color-accent);
+  --color-bg-primary: var(--color-background);
+  --color-bg-secondary: var(--color-white);
+  --color-bg-accent: var(--color-primary);
+  --color-border: #E0E0E0;
+  --color-border-accent: var(--color-accent);
+
+  /* ── Spacing Scale ── */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  /* Vertical rhythm between major homepage blocks (Hero, Carousel, Categories) */
+  --space-section-y: 60px;
+
+  /* ── Typography ── */
+  --font-family-body:
+    "Heebo", "Rubik", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-family-heading:
+    "Frank Ruhl Libre", "David Libre", "Times New Roman", serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+
+  /* ── Border Radius ── */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 16px;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.1);
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* ── Layout ── */
+  --container-max-width: 1200px;
+  --header-height: 4rem;
+}

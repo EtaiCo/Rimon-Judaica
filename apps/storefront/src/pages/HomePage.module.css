@@ -1,0 +1,15 @@
+.section {
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-lg);
+  padding-block: var(--space-section-y);
+  background: var(--color-background);
+}
+
+.sectionTitle {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-2xl);
+  color: var(--color-accent);
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}

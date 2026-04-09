@@ -1,0 +1,88 @@
+.section {
+  background: var(--color-background);
+  padding-block: var(--space-section-y);
+}
+
+.inner {
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-lg);
+}
+
+.swiper {
+  padding-bottom: var(--space-2xl);
+  --swiper-navigation-size: 2.5rem;
+  --swiper-navigation-top-offset: 42%;
+  --swiper-navigation-sides-offset: 0.25rem;
+}
+
+.slide {
+  height: auto;
+  display: flex;
+}
+
+.slide > * {
+  width: 100%;
+}
+
+/* Pagination bullets — design tokens */
+.swiper :global(.swiper-pagination) {
+  bottom: 0;
+}
+
+.swiper :global(.swiper-pagination-bullet) {
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: 0 var(--space-xs) !important;
+  background: var(--color-primary);
+  opacity: 0.28;
+  transition:
+    transform var(--transition-fast),
+    background var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.swiper :global(.swiper-pagination-bullet:hover) {
+  opacity: 0.45;
+}
+
+.swiper :global(.swiper-pagination-bullet-active) {
+  background: var(--color-accent);
+  opacity: 1;
+  transform: scale(1.25);
+}
+
+/* Navigation arrows — primary default, gold on hover */
+.swiper :global(.swiper-button-prev),
+.swiper :global(.swiper-button-next) {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-top: 0;
+  border-radius: var(--radius-full);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
+  background: var(--color-white);
+  color: var(--color-primary);
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.swiper :global(.swiper-button-prev)::after,
+.swiper :global(.swiper-button-next)::after {
+  font-size: 1rem;
+  font-weight: var(--font-weight-bold);
+}
+
+.swiper :global(.swiper-button-prev:hover),
+.swiper :global(.swiper-button-next:hover),
+.swiper :global(.swiper-button-prev:focus-visible),
+.swiper :global(.swiper-button-next:focus-visible) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+.swiper :global(.swiper-button-disabled) {
+  opacity: 0.35;
+}

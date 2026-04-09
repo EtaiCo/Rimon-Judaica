@@ -1,0 +1,27 @@
+{
+  "name": "@rimon/core-service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "lint": "tsc --noEmit",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2",
+    "cors": "^2.8.5",
+    "dotenv": "^16",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@rimon/config-ts": "workspace:*",
+    "@rimon/shared-types": "workspace:*",
+    "@types/cors": "^2",
+    "@types/express": "^4",
+    "@types/node": "^22",
+    "tsx": "^4",
+    "typescript": "^5.7.0"
+  }
+}
