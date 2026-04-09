@@ -1,11 +1,8 @@
 :root {
   /* ── Brand Colors ── */
-  --color-primary: #2C1A0E;
-  --color-primary-light: #4A2E1A;
-  --color-primary-dark: #1A0F08;
-  --color-accent: #D4AF37;
-  --color-accent-light: #E5C76A;
-  --color-accent-dark: #B8941F;
+  --color-primary: #8f572f;
+  --color-primary-light: #b16d3c;
+  --color-primary-dark:  #8f572f;
   --color-background: #FAF8F2;
   --color-background-dark: #F0EDE0;
   --color-cream: #FAF8F2;
@@ -24,15 +21,16 @@
   --color-gray-800: #262626;
 
   /* ── Semantic Colors ── */
-  --color-text-primary: var(--color-primary);
+  /* Main reading color (decoupled from brand brown used on buttons/UI chrome) */
+  --color-text-primary: var(--color-black);
   --color-text-secondary: var(--color-gray-600);
   --color-text-inverse: var(--color-white);
-  --color-text-accent: var(--color-accent);
+  --color-text-accent: var(--color-primary);
   --color-bg-primary: var(--color-background);
   --color-bg-secondary: var(--color-white);
   --color-bg-accent: var(--color-primary);
   --color-border: #E0E0E0;
-  --color-border-accent: var(--color-accent);
+  --color-border-accent: var(--color-primary);
 
   /* ── Spacing Scale ── */
   --space-xs: 0.25rem;
@@ -47,9 +45,11 @@
 
   /* ── Typography ── */
   --font-family-body:
-    "Heebo", "Rubik", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    "Heebo", "Rubik", "Noto Sans Hebrew", "Segoe UI", "Arial Hebrew",
+    "Helvetica Neue", Arial, sans-serif;
   --font-family-heading:
-    "Frank Ruhl Libre", "David Libre", "Times New Roman", serif;
+    "Frank Ruhl Libre", "David Libre", "Noto Serif Hebrew", "Times New Roman",
+    "Arial Hebrew", serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;

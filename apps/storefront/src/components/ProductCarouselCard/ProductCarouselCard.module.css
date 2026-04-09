@@ -22,7 +22,7 @@
 }
 
 .card:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -54,7 +54,7 @@
   font-family: var(--font-family-body);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-primary);
+  color: var(--color-text-primary);
   text-align: right;
   margin: 0;
   line-height: var(--line-height-tight);
@@ -72,7 +72,7 @@
   font-family: var(--font-family-body);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
-  color: var(--color-accent);
+  color: var(--color-primary);
 }
 
 .arrow {
@@ -84,5 +84,5 @@
 }
 
 .card:hover .arrow {
-  color: var(--color-accent-dark);
+  color: var(--color-primary-dark);
 }

@@ -47,7 +47,7 @@
 }
 
 .swiper :global(.swiper-pagination-bullet-active) {
-  background: var(--color-accent);
+  background: var(--color-primary);
   opacity: 1;
   transform: scale(1.25);
 }
@@ -61,7 +61,7 @@
   border-radius: var(--radius-full);
   border: 1px solid color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
   background: var(--color-white);
-  color: var(--color-primary);
+  color: var(--color-text-primary);
   transition:
     border-color var(--transition-fast),
     color var(--transition-fast),
@@ -78,9 +78,9 @@
 .swiper :global(.swiper-button-next:hover),
 .swiper :global(.swiper-button-prev:focus-visible),
 .swiper :global(.swiper-button-next:focus-visible) {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent) 22%, transparent);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-primary) 22%, transparent);
 }
 
 .swiper :global(.swiper-button-disabled) {

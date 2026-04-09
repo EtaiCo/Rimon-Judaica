@@ -1,0 +1,2 @@
+# Store text files in the repo with LF; consistent across macOS/Linux/Windows
+* text=auto eol=lf

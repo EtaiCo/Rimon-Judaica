@@ -9,6 +9,17 @@ const EMAIL_REGEX =
   /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 const PHONE_DIGITS_REGEX = /^[0-9]{9,10}$/;
 
+const PASSWORD_POLICY_HE =
+  "הסיסמה חייבת להכיל לפחות 8 תווים, כולל אות באנגלית ומספר אחד";
+
+function isStrongPassword(password: string): boolean {
+  return (
+    password.length >= 8 &&
+    /[A-Za-z]/.test(password) &&
+    /[0-9]/.test(password)
+  );
+}
+
 function normalizePhone(raw: string): string {
   return raw.replace(/\D/g, "");
 }
@@ -28,12 +39,19 @@ router.post("/register", async (req, res) => {
   }
 
   const body = req.body as Record<string, unknown>;
+  const fullNameRaw =
+    typeof body.full_name === "string" ? body.full_name.trim() : "";
   const emailRaw = typeof body.email === "string" ? body.email.trim() : "";
   const phoneRaw = typeof body.phone === "string" ? body.phone.trim() : "";
   const password = typeof body.password === "string" ? body.password : "";
   const customerType: CustomerType = isCustomerType(body.customer_type)
     ? body.customer_type
     : "private";
+
+  if (fullNameRaw.length < 2) {
+    res.status(400).json({ error: "יש להזין שם מלא (לפחות שני תווים)." });
+    return;
+  }
 
   if (!emailRaw || !EMAIL_REGEX.test(emailRaw)) {
     res.status(400).json({ error: "כתובת האימייל אינה תקינה." });
@@ -48,10 +66,8 @@ router.post("/register", async (req, res) => {
     return;
   }
 
-  if (password.length < 8) {
-    res
-      .status(400)
-      .json({ error: "הסיסמה חייבת להכיל לפחות 8 תווים." });
+  if (!isStrongPassword(password)) {
+    res.status(400).json({ error: PASSWORD_POLICY_HE });
     return;
   }
 
@@ -67,12 +83,15 @@ router.post("/register", async (req, res) => {
   const { data, error } = await supabaseAdmin
     .from("customers")
     .insert({
+      full_name: fullNameRaw,
       email,
       phone: phoneDigits,
       customer_type: customerType,
       password_hash,
     })
-    .select("id, email, phone, customer_type, created_at, last_login")
+    .select(
+      "id, full_name, email, phone, customer_type, created_at, last_login",
+    )
     .single();
 
   if (error) {
@@ -90,6 +109,7 @@ router.post("/register", async (req, res) => {
 
   const customer: Customer = {
     id: data.id,
+    full_name: data.full_name ?? "",
     email: data.email,
     phone: data.phone,
     customer_type: data.customer_type as CustomerType,
@@ -129,7 +149,7 @@ router.post("/login", async (req, res) => {
   const { data: row, error: fetchErr } = await supabaseAdmin
     .from("customers")
     .select(
-      "id, email, phone, customer_type, created_at, last_login, password_hash",
+      "id, full_name, email, phone, customer_type, created_at, last_login, password_hash",
     )
     .eq("email", email)
     .maybeSingle();
@@ -155,7 +175,9 @@ router.post("/login", async (req, res) => {
     .from("customers")
     .update({ last_login: nowIso })
     .eq("id", row.id)
-    .select("id, email, phone, customer_type, created_at, last_login")
+    .select(
+      "id, full_name, email, phone, customer_type, created_at, last_login",
+    )
     .single();
 
   if (updateErr) {
@@ -165,6 +187,7 @@ router.post("/login", async (req, res) => {
 
   const customer: Customer = {
     id: updated.id,
+    full_name: updated.full_name ?? "",
     email: updated.email,
     phone: updated.phone,
     customer_type: updated.customer_type as CustomerType,
