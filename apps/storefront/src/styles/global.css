@@ -25,17 +25,17 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
   line-height: var(--line-height-tight);
-  color: var(--color-primary);
+  color: var(--color-text-primary);
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--color-text-primary);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--color-accent);
+  color: var(--color-primary);
 }
 
 img {
@@ -63,7 +63,7 @@ ul, ol {
 
 .divider-accent {
   border: none;
-  border-top: 1px solid var(--color-accent);
+  border-top: 1px solid var(--color-primary);
   opacity: 0.3;
   margin-block: var(--space-lg);
 }

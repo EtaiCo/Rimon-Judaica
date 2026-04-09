@@ -1,0 +1,27 @@
+.passwordHint {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: var(--space-xs) 0 0;
+  line-height: var(--line-height-normal);
+  text-align: right;
+}
+
+.strengthMeter {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.strengthBar {
+  flex: 1;
+  height: 0.25rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-300);
+  transition: background var(--transition-fast);
+}
+
+.strengthBarActive {
+  background: var(--color-primary);
+}

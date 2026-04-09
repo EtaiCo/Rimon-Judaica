@@ -16,7 +16,7 @@
 .slug {
   font-family: var(--font-family-heading);
   font-size: var(--font-size-3xl);
-  color: var(--color-primary);
+  color: var(--color-text-primary);
   margin: 0 0 var(--space-md);
 }
 
@@ -26,12 +26,12 @@
 }
 
 .back {
-  color: var(--color-accent-dark);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-medium);
   text-decoration: none;
 }
 
 .back:hover {
-  color: var(--color-primary);
+  color: var(--color-text-primary);
   text-decoration: underline;
 }

@@ -9,7 +9,7 @@
 .sectionTitle {
   font-family: var(--font-family-heading);
   font-size: var(--font-size-2xl);
-  color: var(--color-accent);
+  color: var(--color-primary);
   margin-bottom: var(--space-lg);
   text-align: center;
 }
