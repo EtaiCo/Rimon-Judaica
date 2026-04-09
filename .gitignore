@@ -15,3 +15,8 @@ npm-debug.log*
 pnpm-debug.log*
 
 DB.txt
+
+.vite
+**/.vite
+node_modules
+dist
