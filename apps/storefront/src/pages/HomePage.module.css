@@ -13,3 +13,14 @@
   margin-bottom: var(--space-lg);
   text-align: center;
 }
+
+.feedback,
+.feedbackError {
+  text-align: center;
+  margin: 0 0 var(--space-md);
+  direction: rtl;
+}
+
+.feedbackError {
+  color: var(--color-primary-dark);
+}

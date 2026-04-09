@@ -1,5 +1,7 @@
 export type {
   Category,
+  CategoryProduct,
+  CategoryProductsResponse,
   Product,
   ProductVariant,
   ProductWithVariants,

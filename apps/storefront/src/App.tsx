@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { CategoryPage } from "./pages/CategoryPage";
+import { ProductPage } from "./pages/ProductPage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 
@@ -9,6 +10,7 @@ export function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/category/:slug" element={<CategoryPage />} />
+      <Route path="/product/:id" element={<ProductPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
     </Routes>

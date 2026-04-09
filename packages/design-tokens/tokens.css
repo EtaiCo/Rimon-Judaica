@@ -3,6 +3,8 @@
   --color-primary: #8f572f;
   --color-primary-light: #b16d3c;
   --color-primary-dark:  #8f572f;
+  /* Gold accent for prices / highlights (Rikmat-style PDP) */
+  --color-accent: #c9a227;
   --color-background: #FAF8F2;
   --color-background-dark: #F0EDE0;
   --color-cream: #FAF8F2;

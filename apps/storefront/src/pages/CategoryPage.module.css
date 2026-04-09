@@ -1,37 +1,61 @@
 .wrap {
   max-width: var(--container-max-width);
   margin-inline: auto;
-  padding: var(--space-3xl) var(--space-lg);
-  text-align: center;
+  padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+  direction: rtl;
 }
 
-.label {
+.breadcrumb {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
 }
 
-.slug {
+.breadcrumb a {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbSep {
+  margin-inline: var(--space-sm);
+  color: var(--color-gray-400);
+}
+
+.title {
   font-family: var(--font-family-heading);
   font-size: var(--font-size-3xl);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-md);
+  color: var(--color-primary);
+  margin: 0 0 var(--space-xl);
+  text-align: right;
 }
 
-.hint {
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-lg);
+}
+
+.empty {
+  text-align: right;
   color: var(--color-text-secondary);
-  margin-bottom: var(--space-xl);
+  margin: 0;
+}
+
+.state {
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding: var(--space-3xl) var(--space-lg);
+  text-align: center;
+  direction: rtl;
 }
 
 .back {
-  color: var(--color-primary-dark);
+  display: inline-block;
+  margin-top: var(--space-lg);
+  color: var(--color-primary);
   font-weight: var(--font-weight-medium);
-  text-decoration: none;
-}
-
-.back:hover {
-  color: var(--color-text-primary);
-  text-decoration: underline;
 }
