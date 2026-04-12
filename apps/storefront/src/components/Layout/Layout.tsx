@@ -1,14 +1,23 @@
 import type { ReactNode } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { PanelRightOpen, ShoppingCart } from "lucide-react";
 import { useAuth } from "../../auth/AuthContext";
+import { useCart } from "../../cart/CartContext";
+import { CartDrawer } from "../CartDrawer/CartDrawer";
 import styles from "./Layout.module.css";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
+const GUEST_CART_TOOLTIP =
+  "התחבר כדי לשריין את הפריטים ל-3 ימים";
+
 export function Layout({ children }: LayoutProps) {
-  const { customer, clearSession } = useAuth();
+  const { customer, clearSession, accessToken } = useAuth();
+  const { itemCount } = useCart();
+  const [cartOpen, setCartOpen] = useState(false);
 
   return (
     <div className={styles.wrapper}>
@@ -24,6 +33,31 @@ export function Layout({ children }: LayoutProps) {
               <a href="/about">אודות</a>
               <a href="/contact">צור קשר</a>
             </nav>
+            <div className={styles.cartCluster}>
+              <Link
+                to="/cart"
+                className={styles.cartLink}
+                aria-label="עגלת קניות"
+                title={
+                  !accessToken && itemCount > 0
+                    ? GUEST_CART_TOOLTIP
+                    : undefined
+                }
+              >
+                <ShoppingCart size={22} strokeWidth={1.75} aria-hidden />
+                {itemCount > 0 ? (
+                  <span className={styles.cartBadge}>{itemCount}</span>
+                ) : null}
+              </Link>
+              <button
+                type="button"
+                className={styles.quickViewBtn}
+                aria-label="מבט מהיר על העגלה"
+                onClick={() => setCartOpen(true)}
+              >
+                <PanelRightOpen size={18} strokeWidth={1.75} aria-hidden />
+              </button>
+            </div>
             <nav className={styles.authNav} aria-label="חשבון">
               {customer ? (
                 <>
@@ -52,6 +86,8 @@ export function Layout({ children }: LayoutProps) {
           </div>
         </div>
       </header>
+
+      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
 
       <main className={styles.main}>{children}</main>
 

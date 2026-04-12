@@ -64,6 +64,67 @@
   color: var(--color-primary);
 }
 
+.cartCluster {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.cartLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.cartLink:hover {
+  color: var(--color-primary);
+}
+
+.quickViewBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.quickViewBtn:hover {
+  color: var(--color-primary);
+  background: var(--color-gray-100);
+}
+
+.cartBadge {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  min-width: 1.125rem;
+  height: 1.125rem;
+  padding: 0 4px;
+  font-size: 0.65rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.125rem;
+  text-align: center;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  color: var(--color-black);
+}
+
 .authNav {
   display: flex;
   align-items: center;

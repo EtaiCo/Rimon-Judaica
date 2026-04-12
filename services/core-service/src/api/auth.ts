@@ -1,6 +1,7 @@
 import { Router, type Router as RouterType } from "express";
 import type { Customer, CustomerType } from "@rimon/shared-types";
 import { getSupabaseAdmin } from "../config/supabase.js";
+import { signCustomerAccessToken } from "../lib/jwt.js";
 import { hashPassword, verifyPassword } from "../lib/password.js";
 
 const router: RouterType = Router();
@@ -117,7 +118,16 @@ router.post("/register", async (req, res) => {
     last_login: data.last_login ?? undefined,
   };
 
-  res.status(201).json({ customer });
+  let accessToken: string;
+  try {
+    accessToken = signCustomerAccessToken(customer.id, customer.email);
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    res.status(503).json({ error: msg });
+    return;
+  }
+
+  res.status(201).json({ customer, accessToken });
 });
 
 router.post("/login", async (req, res) => {
@@ -195,7 +205,16 @@ router.post("/login", async (req, res) => {
     last_login: updated.last_login ?? undefined,
   };
 
-  res.json({ customer });
+  let accessToken: string;
+  try {
+    accessToken = signCustomerAccessToken(customer.id, customer.email);
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    res.status(503).json({ error: msg });
+    return;
+  }
+
+  res.json({ customer, accessToken });
 });
 
 export default router;

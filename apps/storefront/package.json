@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^1.8.0",
     "react": "^19.0.0",
-    "swiper": "^11",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7"
+    "react-router-dom": "^7",
+    "sonner": "^2.0.7",
+    "swiper": "^11"
   },
   "devDependencies": {
     "@rimon/config-ts": "workspace:*",
