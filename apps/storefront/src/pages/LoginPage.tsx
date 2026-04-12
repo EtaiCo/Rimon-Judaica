@@ -30,6 +30,7 @@ export function LoginPage() {
       });
       const data = (await res.json()) as {
         customer?: unknown;
+        accessToken?: string;
         error?: string;
       };
       if (!res.ok) {
@@ -39,21 +40,26 @@ export function LoginPage() {
       if (
         !data.customer ||
         typeof data.customer !== "object" ||
-        data.customer === null
+        data.customer === null ||
+        typeof data.accessToken !== "string" ||
+        !data.accessToken.trim()
       ) {
         setError("תגובת השרת אינה תקינה.");
         return;
       }
       const c = data.customer as Record<string, unknown>;
       setSession({
-        id: String(c.id),
-        full_name: typeof c.full_name === "string" ? c.full_name : "",
-        email: String(c.email),
-        phone: String(c.phone),
-        customer_type: c.customer_type as "private" | "wholesale",
-        created_at: String(c.created_at),
-        last_login:
-          typeof c.last_login === "string" ? c.last_login : undefined,
+        accessToken: data.accessToken.trim(),
+        customer: {
+          id: String(c.id),
+          full_name: typeof c.full_name === "string" ? c.full_name : "",
+          email: String(c.email),
+          phone: String(c.phone),
+          customer_type: c.customer_type as "private" | "wholesale",
+          created_at: String(c.created_at),
+          last_login:
+            typeof c.last_login === "string" ? c.last_login : undefined,
+        },
       });
       setSuccess(true);
       window.setTimeout(() => navigate("/", { replace: true }), 1100);

@@ -26,4 +26,9 @@ app.listen(config.port, () => {
       "[core-service] SUPABASE_SERVICE_ROLE_KEY is missing. Set it in services/core-service/.env — /api/products returns 503 until then.",
     );
   }
+  if (!process.env.JWT_SECRET?.trim()) {
+    console.warn(
+      "[core-service] JWT_SECRET is missing. Set it in services/core-service/.env — login/register and /api/cart will fail until then.",
+    );
+  }
 });

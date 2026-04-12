@@ -9,31 +9,45 @@ import {
 } from "react";
 import type { Customer } from "@rimon/shared-types";
 
-const STORAGE_KEY = "rimon_customer";
+const STORAGE_KEY = "rimon_session";
 
-function parseStoredCustomer(raw: string | null): Customer | null {
+export interface AuthSession {
+  customer: Customer;
+  accessToken: string;
+}
+
+function parseStoredSession(raw: string | null): AuthSession | null {
   if (!raw?.trim()) return null;
   try {
     const v = JSON.parse(raw) as unknown;
     if (!v || typeof v !== "object") return null;
     const o = v as Record<string, unknown>;
+    const c = o.customer;
+    if (!c || typeof c !== "object" || c === null) return null;
+    const co = c as Record<string, unknown>;
     if (
-      typeof o.id !== "string" ||
-      typeof o.email !== "string" ||
-      typeof o.phone !== "string" ||
-      typeof o.customer_type !== "string" ||
-      typeof o.created_at !== "string"
+      typeof o.accessToken !== "string" ||
+      !o.accessToken.trim() ||
+      typeof co.id !== "string" ||
+      typeof co.email !== "string" ||
+      typeof co.phone !== "string" ||
+      typeof co.customer_type !== "string" ||
+      typeof co.created_at !== "string"
     ) {
       return null;
     }
     return {
-      id: o.id,
-      full_name: typeof o.full_name === "string" ? o.full_name : "",
-      email: o.email,
-      phone: o.phone,
-      customer_type: o.customer_type as Customer["customer_type"],
-      created_at: o.created_at,
-      last_login: typeof o.last_login === "string" ? o.last_login : undefined,
+      accessToken: o.accessToken.trim(),
+      customer: {
+        id: co.id,
+        full_name: typeof co.full_name === "string" ? co.full_name : "",
+        email: co.email,
+        phone: co.phone,
+        customer_type: co.customer_type as Customer["customer_type"],
+        created_at: co.created_at,
+        last_login:
+          typeof co.last_login === "string" ? co.last_login : undefined,
+      },
     };
   } catch {
     return null;
@@ -42,8 +56,9 @@ function parseStoredCustomer(raw: string | null): Customer | null {
 
 interface AuthContextValue {
   customer: Customer | null;
+  accessToken: string | null;
   isReady: boolean;
-  setSession: (customer: Customer) => void;
+  setSession: (session: AuthSession) => void;
   clearSession: () => void;
 }
 
@@ -51,27 +66,39 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [customer, setCustomer] = useState<Customer | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const stored = parseStoredCustomer(sessionStorage.getItem(STORAGE_KEY));
-    setCustomer(stored);
+    const stored = parseStoredSession(sessionStorage.getItem(STORAGE_KEY));
+    if (stored) {
+      setCustomer(stored.customer);
+      setAccessToken(stored.accessToken);
+    }
     setIsReady(true);
   }, []);
 
-  const setSession = useCallback((next: Customer) => {
-    setCustomer(next);
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  const setSession = useCallback((session: AuthSession) => {
+    setCustomer(session.customer);
+    setAccessToken(session.accessToken);
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session));
   }, []);
 
   const clearSession = useCallback(() => {
     setCustomer(null);
+    setAccessToken(null);
     sessionStorage.removeItem(STORAGE_KEY);
   }, []);
 
   const value = useMemo(
-    () => ({ customer, isReady, setSession, clearSession }),
-    [customer, isReady, setSession, clearSession],
+    () => ({
+      customer,
+      accessToken,
+      isReady,
+      setSession,
+      clearSession,
+    }),
+    [customer, accessToken, isReady, setSession, clearSession],
   );
 
   return (

@@ -7,4 +7,10 @@ export type {
   ProductWithVariants,
 } from "./product";
 export type { Customer, CustomerType } from "./customer";
+export type { AuthSuccessResponse } from "./auth";
+export type {
+  CartLine,
+  AddCartItemRpcResult,
+  CartMutationRpcResult,
+} from "./cart";
 export type { User, Address } from "./user";
