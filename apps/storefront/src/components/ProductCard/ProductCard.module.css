@@ -64,6 +64,43 @@
   border-color: var(--color-gray-300);
 }
 
+.wishBtn {
+  position: absolute;
+  top: var(--space-sm);
+  inset-inline-end: var(--space-sm);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgb(44 26 14 / 0.2);
+  background: rgb(255 255 255 / 0.94);
+  color: var(--color-primary);
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.wishBtn:hover {
+  background: var(--color-cream);
+  transform: scale(1.05);
+}
+
+.wishBtnActive {
+  color: #b8860b;
+  border-color: rgb(184 134 11 / 0.45);
+}
+
+.wishBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .footer {
   flex: 0 0 auto;
   display: flex;

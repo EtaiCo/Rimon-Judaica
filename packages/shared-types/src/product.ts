@@ -32,13 +32,16 @@ export type ProductWithVariants = Product & {
   minPrice?: number;
 };
 
-/** Product row for category listing (first variant image + starting price). */
+/** Product row for category listing (variants for cards + listing price). */
 export interface CategoryProduct {
   id: string;
   name: string;
   slug: string;
   imageUrl?: string;
+  /** Minimum variant price (for quick display). */
   price: number;
+  minPrice?: number;
+  variants: ProductVariant[];
 }
 
 export interface CategoryProductsResponse {

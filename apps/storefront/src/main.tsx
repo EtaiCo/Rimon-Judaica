@@ -6,6 +6,7 @@ import "@rimon/design-tokens/tokens.css";
 import "./styles/global.css";
 import { AuthProvider } from "./auth/AuthContext";
 import { CartProvider } from "./cart/CartContext";
+import { WishlistProvider } from "./wishlist/WishlistContext";
 import { App } from "./App";
 
 createRoot(document.getElementById("root")!).render(
@@ -13,13 +14,15 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <AuthProvider>
         <CartProvider>
-          <App />
-          <Toaster
-            richColors
-            dir="rtl"
-            position="top-center"
-            closeButton
-          />
+          <WishlistProvider>
+            <App />
+            <Toaster
+              richColors
+              dir="rtl"
+              position="top-center"
+              closeButton
+            />
+          </WishlistProvider>
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>

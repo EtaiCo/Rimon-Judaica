@@ -1,9 +1,16 @@
 import type { MouseEvent } from "react";
 import { Link } from "react-router-dom";
+import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import type { ProductVariant, ProductWithVariants } from "@rimon/shared-types";
+
+type ProductCardProduct = Pick<
+  ProductWithVariants,
+  "id" | "name" | "slug" | "variants" | "minPrice"
+>;
 import { useAuth } from "../../auth/AuthContext";
 import { useCart } from "../../cart/CartContext";
+import { useWishlist } from "../../wishlist/WishlistContext";
 import { formatPriceIls } from "../../lib/formatPrice";
 import { pickDisplayVariant } from "../../lib/productDisplay";
 import styles from "./ProductCard.module.css";
@@ -12,7 +19,7 @@ const FALLBACK_IMAGE =
   "https://placehold.co/600x800/FAF8F2/2C1A0E?text=%3F";
 
 interface ProductCardProps {
-  product: ProductWithVariants;
+  product: ProductCardProduct;
 }
 
 function StockBadge({ variant }: { variant: ProductVariant }) {
@@ -30,6 +37,7 @@ function StockBadge({ variant }: { variant: ProductVariant }) {
 export function ProductCard({ product }: ProductCardProps) {
   const { accessToken } = useAuth();
   const { addToCart } = useCart();
+  const { isWishlisted, toggleWishlist } = useWishlist();
   const displayVariant = pickDisplayVariant(product.variants);
   const priceLabel =
     product.minPrice != null
@@ -67,10 +75,50 @@ export function ProductCard({ product }: ProductCardProps) {
     }
   }
 
+  async function handleWishlist(e: MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!displayVariant) return;
+    if (!accessToken) {
+      toast.error("התחברו כדי לשמור מוצרים לרשימה.");
+      return;
+    }
+    const wasWishlisted = isWishlisted(displayVariant.id);
+    const result = await toggleWishlist(displayVariant.id);
+    if (result.ok) {
+      toast.success(
+        wasWishlisted ? "הוסר מהרשימה" : "נוסף לרשימה שלך",
+      );
+    } else {
+      toast.error(result.error);
+    }
+  }
+
+  const wishlisted =
+    displayVariant != null && isWishlisted(displayVariant.id);
+
   return (
     <article className={styles.card}>
       <div className={styles.imageBlock}>
         {displayVariant ? <StockBadge variant={displayVariant} /> : null}
+        {displayVariant ? (
+          <button
+            type="button"
+            className={`${styles.wishBtn} ${wishlisted ? styles.wishBtnActive : ""}`}
+            aria-label={
+              wishlisted ? "הסרה מהרשימה שלי" : "הוספה לרשימה שלי"
+            }
+            aria-pressed={wishlisted}
+            onClick={handleWishlist}
+          >
+            <Heart
+              size={18}
+              strokeWidth={1.75}
+              aria-hidden
+              fill={wishlisted ? "currentColor" : "none"}
+            />
+          </button>
+        ) : null}
         <Link
           to={`/product/${product.id}`}
           className={styles.imageLink}

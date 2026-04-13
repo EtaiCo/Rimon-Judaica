@@ -14,3 +14,11 @@ export type {
   CartMutationRpcResult,
 } from "./cart";
 export type { User, Address } from "./user";
+export type { WishlistLine } from "./wishlist";
+export type {
+  OrderDetail,
+  OrderDetailLine,
+  OrderShippingAddress,
+  OrderShippingMethod,
+  OrderSummary,
+} from "./orders";

@@ -132,7 +132,9 @@ router.get("/:slug/products", async (req, res) => {
 
   const { data: variantRows, error: varErr } = await supabaseAdmin
     .from("product_variants")
-    .select("id, product_id, price, image_url")
+    .select(
+      "id, product_id, variant_name, price, stock_quantity, sku, image_url",
+    )
     .in("product_id", productIds);
 
   if (varErr) {
@@ -140,32 +142,43 @@ router.get("/:slug/products", async (req, res) => {
     return;
   }
 
-  const byProduct = new Map<string, { id: string; price: number; image_url: string | null }[]>();
+  type VariantRow = NonNullable<typeof variantRows>[number];
+  const byProduct = new Map<string, VariantRow[]>();
   for (const v of variantRows ?? []) {
-    const list = byProduct.get(v.product_id) ?? [];
-    list.push({
-      id: v.id,
-      price: Number(v.price),
-      image_url: v.image_url,
-    });
-    byProduct.set(v.product_id, list);
+    const pid = v.product_id as string;
+    const list = byProduct.get(pid) ?? [];
+    list.push(v);
+    byProduct.set(pid, list);
   }
 
   const listProducts: CategoryProduct[] = products.map((p) => {
-    const variants = (byProduct.get(p.id) ?? []).sort((a, b) =>
-      a.id.localeCompare(b.id),
+    const raw = (byProduct.get(p.id) ?? []).sort((a, b) =>
+      String(a.id).localeCompare(String(b.id)),
     );
+    const variants = raw.map((v) => ({
+      id: v.id as string,
+      productId: p.id,
+      variantName: v.variant_name as string,
+      price: Number(v.price),
+      stockQuantity: v.stock_quantity as number,
+      sku: v.sku as string,
+      imageUrl:
+        v.image_url != null && String(v.image_url).trim() !== ""
+          ? String(v.image_url).trim()
+          : undefined,
+    }));
     const first = variants[0];
-    const imageUrl =
-      first?.image_url && String(first.image_url).trim() !== ""
-        ? String(first.image_url).trim()
-        : undefined;
+    const prices = variants.map((x) => x.price);
+    const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+    const imageUrl = first?.imageUrl;
     return {
       id: p.id,
       name: p.name,
       slug: p.slug,
       imageUrl,
-      price: first?.price ?? 0,
+      price: first?.price ?? minPrice,
+      minPrice: variants.length > 0 ? minPrice : undefined,
+      variants,
     };
   });
 

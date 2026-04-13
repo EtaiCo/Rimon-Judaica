@@ -6,6 +6,8 @@ import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { ProductDetailPage } from "./pages/ProductDetailPage";
 import { CartPage } from "./pages/CartPage";
+import { AccountPage } from "./pages/AccountPage";
+import { OrderDetailPage } from "./pages/OrderDetailPage";
 
 export function App() {
   return (
@@ -14,6 +16,8 @@ export function App() {
       <Route path="/category/:slug" element={<CategoryPage />} />
       <Route path="/product/:id" element={<ProductDetailPage />} />
       <Route path="/cart" element={<CartPage />} />
+      <Route path="/account" element={<AccountPage />} />
+      <Route path="/account/orders/:orderId" element={<OrderDetailPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
     </Routes>

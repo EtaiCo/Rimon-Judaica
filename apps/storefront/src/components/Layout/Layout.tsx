@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { PanelRightOpen, ShoppingCart } from "lucide-react";
+import { PanelRightOpen, ShoppingCart, User } from "lucide-react";
 import { useAuth } from "../../auth/AuthContext";
 import { useCart } from "../../cart/CartContext";
 import { CartDrawer } from "../CartDrawer/CartDrawer";
@@ -34,6 +34,14 @@ export function Layout({ children }: LayoutProps) {
               <a href="/contact">צור קשר</a>
             </nav>
             <div className={styles.cartCluster}>
+              <Link
+                to={customer ? "/account" : "/login"}
+                className={styles.cartLink}
+                aria-label={customer ? "האזור האישי" : "התחברות"}
+                title={customer ? "האזור האישי" : "התחברות"}
+              >
+                <User size={22} strokeWidth={1.75} aria-hidden />
+              </Link>
               <Link
                 to="/cart"
                 className={styles.cartLink}

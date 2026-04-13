@@ -5,9 +5,13 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "seed:wishlist-orders": "tsx scripts/seed-wishlist-orders.ts"
   },
   "devDependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "dotenv": "^16.4.7",
+    "tsx": "^4.19.2",
     "turbo": "^2.9.5"
   },
   "packageManager": "pnpm@9.15.4"
