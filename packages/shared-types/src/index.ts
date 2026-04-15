@@ -1,5 +1,6 @@
 export type {
   Category,
+  SubCategory,
   CategoryProduct,
   CategoryProductsResponse,
   Product,
@@ -22,3 +23,4 @@ export type {
   OrderShippingMethod,
   OrderSummary,
 } from "./orders";
+export type { SiteImageSetting, BootstrapPayload } from "./bootstrap";

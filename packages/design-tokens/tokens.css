@@ -1,29 +1,27 @@
 :root {
-  /* ── Brand Colors ── */
-  --color-primary: #8f572f;
-  --color-primary-light: #b16d3c;
-  --color-primary-dark:  #8f572f;
-  /* Gold accent for prices  */
-  --color-accent: #c9a227;
-  --color-background: #FAF8F2;
-  --color-background-dark: #F0EDE0;
-  --color-cream: #FAF8F2;
-  --color-cream-dark: #F0EDE0;
+  /* ── Brand (deep burgundy system) ── */
+  --color-primary: #5c2330;
+  --color-primary-light: #743040;
+  --color-primary-dark: #451a24;
+  --color-accent: #6b1e2b;
+  --color-background: #ffffff;
+  --color-background-dark: #1a1a1a;
+  --color-cream: #f7f7f5;
+  --color-cream-dark: #eeeeeb;
 
-  /* ── Neutral Colors ── */
-  --color-white: #FFFFFF;
-  --color-black: #1A1A1A;
-  --color-gray-100: #F7F7F5;
-  --color-gray-200: #E8E8E4;
-  --color-gray-300: #D4D4D0;
-  --color-gray-400: #A3A3A0;
+  /* ── Neutrals ── */
+  --color-white: #ffffff;
+  --color-black: #1a1a1a;
+  --color-gray-100: #f7f7f5;
+  --color-gray-200: #e8e8e4;
+  --color-gray-300: #d4d4d0;
+  --color-gray-400: #a3a3a0;
   --color-gray-500: #737370;
   --color-gray-600: #525250;
   --color-gray-700: #404040;
   --color-gray-800: #262626;
 
-  /* ── Semantic Colors ── */
-  /* Main reading color (decoupled from brand brown used on buttons/UI chrome) */
+  /* ── Semantic ── */
   --color-text-primary: var(--color-black);
   --color-text-secondary: var(--color-gray-600);
   --color-text-inverse: var(--color-white);
@@ -31,10 +29,10 @@
   --color-bg-primary: var(--color-background);
   --color-bg-secondary: var(--color-white);
   --color-bg-accent: var(--color-primary);
-  --color-border: #E0E0E0;
+  --color-border: #e0e0e0;
   --color-border-accent: var(--color-primary);
 
-  /* ── Spacing Scale ── */
+  /* ── Spacing ── */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
@@ -42,16 +40,16 @@
   --space-xl: 2rem;
   --space-2xl: 3rem;
   --space-3xl: 4rem;
-  /* Vertical rhythm between major homepage blocks (Hero, Carousel, Categories) */
-  --space-section-y: 60px;
+  --space-section-y: 72px;
 
   /* ── Typography ── */
   --font-family-body:
-    "Heebo", "Rubik", "Noto Sans Hebrew", "Segoe UI", "Arial Hebrew",
+    "Inter", "Noto Sans Hebrew", "Heebo", "Segoe UI", "Arial Hebrew",
     "Helvetica Neue", Arial, sans-serif;
   --font-family-heading:
-    "Frank Ruhl Libre", "David Libre", "Noto Serif Hebrew", "Times New Roman",
-    "Arial Hebrew", serif;
+    "Cormorant Garamond", "Noto Serif Hebrew", "Frank Ruhl Libre",
+    "David Libre", "Times New Roman", "Arial Hebrew", serif;
+  --letter-spacing-heading: 0.02em;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -68,18 +66,18 @@
   --line-height-normal: 1.6;
   --line-height-relaxed: 1.8;
 
-  /* ── Border Radius ── */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 16px;
-  --radius-xl: 1rem;
+  /* ── Border radius (sharp / minimal) ── */
+  --radius-sm: 0;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
   --radius-full: 9999px;
 
-  /* ── Shadows ── */
-  --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.1);
+  /* ── Shadows (disabled — use borders) ── */
+  --shadow-subtle: none;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
 
   /* ── Transitions ── */
   --transition-fast: 150ms ease;

@@ -53,41 +53,37 @@ export function PromoCarousel() {
       aria-label="מוצרים מומלצים"
     >
       <div className={styles.inner}>
-        {apiProducts === null ? (
-          <p className={styles.loading}>טוען מוצרים…</p>
-        ) : (
-          <Swiper
-            className={styles.swiper}
-            modules={[Pagination, Navigation]}
-            dir="rtl"
-            slidesPerView={1}
-            spaceBetween={SPACE_PX}
-            navigation
-            pagination={{ clickable: true }}
-            breakpoints={{
-              640: {
-                slidesPerView: 2,
-                spaceBetween: SPACE_PX,
-              },
-              1024: {
-                slidesPerView: 3,
-                spaceBetween: SPACE_PX,
-              },
-            }}
-          >
-            {useLive
-              ? apiProducts!.map((product) => (
-                  <SwiperSlide key={product.id} className={styles.slide}>
-                    <ProductCard product={product} />
-                  </SwiperSlide>
-                ))
-              : PRODUCT_CAROUSEL_PLACEHOLDERS.map((product) => (
-                  <SwiperSlide key={product.id} className={styles.slide}>
-                    <ProductCarouselCard product={product} />
-                  </SwiperSlide>
-                ))}
-          </Swiper>
-        )}
+        <Swiper
+          className={styles.swiper}
+          modules={[Pagination, Navigation]}
+          dir="rtl"
+          slidesPerView={1}
+          spaceBetween={SPACE_PX}
+          navigation
+          pagination={{ clickable: true }}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+              spaceBetween: SPACE_PX,
+            },
+            1024: {
+              slidesPerView: 3,
+              spaceBetween: SPACE_PX,
+            },
+          }}
+        >
+          {useLive
+            ? apiProducts!.map((product) => (
+                <SwiperSlide key={product.id} className={styles.slide}>
+                  <ProductCard product={product} />
+                </SwiperSlide>
+              ))
+            : PRODUCT_CAROUSEL_PLACEHOLDERS.map((product) => (
+                <SwiperSlide key={product.id} className={styles.slide}>
+                  <ProductCarouselCard product={product} />
+                </SwiperSlide>
+              ))}
+        </Swiper>
       </div>
     </section>
   );

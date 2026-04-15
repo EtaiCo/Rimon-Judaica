@@ -5,25 +5,33 @@ import { Toaster } from "sonner";
 import "@rimon/design-tokens/tokens.css";
 import "./styles/global.css";
 import { AuthProvider } from "./auth/AuthContext";
+import { BootstrapProvider } from "./context/BootstrapContext";
 import { CartProvider } from "./cart/CartContext";
 import { WishlistProvider } from "./wishlist/WishlistContext";
 import { App } from "./App";
 
-createRoot(document.getElementById("root")!).render(
+const routerBaseName =
+  import.meta.env.BASE_URL === "./" ? "/" : import.meta.env.BASE_URL;
+
+const rootEl = document.getElementById("root");
+
+createRoot(rootEl!).render(
   <StrictMode>
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <BrowserRouter basename={routerBaseName}>
       <AuthProvider>
-        <CartProvider>
-          <WishlistProvider>
-            <App />
-            <Toaster
-              richColors
-              dir="rtl"
-              position="top-center"
-              closeButton
-            />
-          </WishlistProvider>
-        </CartProvider>
+        <BootstrapProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <App />
+              <Toaster
+                richColors
+                dir="rtl"
+                position="top-center"
+                closeButton
+              />
+            </WishlistProvider>
+          </CartProvider>
+        </BootstrapProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>,

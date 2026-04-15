@@ -1,28 +1,27 @@
-/* Shell aligned with CategoryCard.module.css for visual parity */
 .card {
   display: flex;
   flex-direction: column;
   text-decoration: none;
   color: inherit;
   background: var(--color-white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: none;
   overflow: hidden;
   aspect-ratio: 3 / 4;
   min-height: 0;
   height: 100%;
   transition:
-    box-shadow var(--transition-normal),
-    transform var(--transition-normal);
+    border-color var(--transition-fast),
+    opacity var(--transition-fast);
 }
 
 .card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
+  border-color: var(--color-gray-300);
 }
 
 .card:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 1px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -30,7 +29,7 @@
   flex: 1 1 auto;
   min-height: 0;
   overflow: hidden;
-  background: var(--color-cream-dark);
+  background: var(--color-gray-100);
 }
 
 .image {
@@ -46,18 +45,19 @@
   gap: var(--space-sm);
   direction: rtl;
   background: var(--color-white);
-  padding: var(--space-md) var(--space-lg);
-  border-top: 1px solid var(--color-gray-200);
+  padding: var(--space-md) var(--space-sm);
+  border-top: 1px solid var(--color-border);
 }
 
 .name {
-  font-family: var(--font-family-body);
+  font-family: var(--font-family-heading);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   text-align: right;
   margin: 0;
   line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-heading);
 }
 
 .metaRow {
@@ -70,16 +70,17 @@
 
 .price {
   font-family: var(--font-family-body);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
 }
 
 .arrow {
   flex-shrink: 0;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-normal);
-  color: var(--color-primary-light);
+  color: var(--color-primary);
   line-height: 1;
 }
 

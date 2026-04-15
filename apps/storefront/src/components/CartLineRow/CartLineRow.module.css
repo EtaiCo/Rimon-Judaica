@@ -3,18 +3,16 @@
   grid-template-columns: auto 1fr;
   gap: var(--space-md);
   align-items: start;
-  padding: var(--space-md) 0;
-  border-bottom: 1px solid var(--color-gray-200);
+  padding: var(--space-md);
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: var(--radius-md);
   direction: rtl;
-}
-
-.row:last-child {
-  border-bottom: none;
 }
 
 .rowCompact {
   gap: var(--space-sm);
-  padding: var(--space-sm) 0;
+  padding: var(--space-sm);
 }
 
 .thumbWrap {
@@ -23,7 +21,8 @@
   height: 5.5rem;
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: var(--color-cream-dark);
+  background: var(--color-gray-100);
+  border: 1px solid var(--color-border);
 }
 
 .thumbWrapCompact {
@@ -59,8 +58,10 @@
 }
 
 .name {
+  font-family: var(--font-family-heading);
   font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
+  letter-spacing: var(--letter-spacing-heading);
   margin: 0 0 var(--space-xs);
   color: var(--color-text-primary);
 }
@@ -99,15 +100,17 @@
 
 .lineTotal {
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
   margin: var(--space-xs) 0 0;
 }
 
 .lineTotalCompact {
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
   margin: 0;
   flex-shrink: 0;
 }
@@ -134,18 +137,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border: 1px solid #1f2937;
+  border-radius: var(--radius-full);
   background: var(--color-white);
   color: var(--color-text-primary);
   transition:
     border-color var(--transition-fast),
-    background var(--transition-fast);
+    background var(--transition-fast),
+    color var(--transition-fast);
 }
 
 .qtyBtn:hover:not(:disabled) {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  border-color: #1f2937;
+  background: #f3f4f6;
+  color: #111827;
 }
 
 .qtyBtn:disabled {

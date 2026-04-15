@@ -33,6 +33,8 @@ export interface CartContextValue {
   itemCount: number;
   loading: boolean;
   lineActionId: string | null;
+  lastAddedVariantId: string | null;
+  addEventSeq: number;
   refreshCart: () => Promise<void>;
   addToCart: (
     variantId: string,
@@ -59,6 +61,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [serverItems, setServerItems] = useState<CartLine[]>([]);
   const [loading, setLoading] = useState(false);
   const [lineActionId, setLineActionId] = useState<string | null>(null);
+  const [lastAddedVariantId, setLastAddedVariantId] = useState<string | null>(
+    null,
+  );
+  const [addEventSeq, setAddEventSeq] = useState(0);
   const prevTokenRef = useRef<string | null | undefined>(undefined);
 
   const guestItemsRef = useRef(guestItems);
@@ -174,6 +180,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         );
         writeGuestCart(next);
         setGuestItems(next);
+        setLastAddedVariantId(variantId);
+        setAddEventSeq((n) => n + 1);
         return { ok: true as const };
       }
 
@@ -193,6 +201,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         };
       }
       await loadServerCart(accessToken);
+      setLastAddedVariantId(variantId);
+      setAddEventSeq((n) => n + 1);
       return { ok: true as const };
     },
     [accessToken, loadServerCart],
@@ -352,6 +362,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       itemCount,
       loading,
       lineActionId,
+      lastAddedVariantId,
+      addEventSeq,
       refreshCart,
       addToCart,
       incrementLine,
@@ -365,6 +377,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       itemCount,
       loading,
       lineActionId,
+      lastAddedVariantId,
+      addEventSeq,
       refreshCart,
       addToCart,
       incrementLine,

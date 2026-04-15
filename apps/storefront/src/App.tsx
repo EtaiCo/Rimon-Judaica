@@ -8,12 +8,17 @@ import { ProductDetailPage } from "./pages/ProductDetailPage";
 import { CartPage } from "./pages/CartPage";
 import { AccountPage } from "./pages/AccountPage";
 import { OrderDetailPage } from "./pages/OrderDetailPage";
+import { SubCategoryPage } from "./pages/SubCategoryPage";
 
 export function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/category/:slug" element={<CategoryPage />} />
+      <Route
+        path="/category/:categorySlug/:subCategorySlug"
+        element={<SubCategoryPage />}
+      />
       <Route path="/product/:id" element={<ProductDetailPage />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/account" element={<AccountPage />} />

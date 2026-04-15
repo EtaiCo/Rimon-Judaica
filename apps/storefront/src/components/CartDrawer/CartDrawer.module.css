@@ -5,44 +5,26 @@
   padding: 0;
   cursor: pointer;
   background: rgb(26 26 26 / 0.35);
-  z-index: 200;
-  animation: fadeIn 0.2s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  z-index: 490;
 }
 
 .panel {
   position: fixed;
   top: 0;
   bottom: 0;
-  inset-inline-start: 0;
+  right: 0;
+  left: auto;
+  inset-inline-end: 0;
+  height: 100vh;
   width: min(22rem, 100vw);
   max-width: 100%;
   background: var(--color-white);
-  box-shadow: var(--shadow-lg);
-  z-index: 201;
+  box-shadow: none;
+  border-inline-start: 1px solid var(--color-border);
+  z-index: 500;
   display: flex;
   flex-direction: column;
   direction: rtl;
-  animation: slideIn 0.25s ease;
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateX(-0.5rem);
-    opacity: 0.9;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
 }
 
 .head {
@@ -67,47 +49,36 @@
   justify-content: center;
   width: 2.25rem;
   height: 2.25rem;
-  border: none;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  background: var(--color-gray-100);
+  background: var(--color-white);
   color: var(--color-text-primary);
-  transition: background var(--transition-fast);
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
 .close:hover {
-  background: var(--color-gray-200);
+  background: var(--color-gray-100);
+  border-color: var(--color-gray-300);
 }
 
 .notice {
   margin: var(--space-md) var(--space-lg) 0;
   padding: var(--space-sm) var(--space-md);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-family-body);
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  background: var(--color-cream);
+  background: var(--color-gray-100);
   line-height: var(--line-height-normal);
 }
 
 .noticeGuest {
   composes: notice;
   color: var(--color-text-primary);
-  border-color: var(--color-primary-light);
-}
-
-.fullCartLink {
-  display: block;
-  margin: var(--space-sm) var(--space-lg) 0;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-primary);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.fullCartLink:hover {
-  color: var(--color-primary-dark);
+  border-color: var(--color-primary);
 }
 
 .list {
@@ -119,6 +90,15 @@
   gap: var(--space-md);
 }
 
+.lineWrap {
+  border-radius: var(--radius-md);
+  transition: background-color 240ms ease;
+}
+
+.lineHighlight {
+  background: color-mix(in srgb, var(--color-primary) 4%, #fff);
+}
+
 .empty {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
@@ -126,60 +106,33 @@
   padding: var(--space-xl);
 }
 
-.line {
-  display: flex;
-  gap: var(--space-md);
-  align-items: flex-start;
-  padding-bottom: var(--space-md);
-  border-bottom: 1px solid var(--color-gray-200);
+.footer {
+  position: sticky;
+  bottom: 0;
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-white);
 }
 
-.line:last-child {
-  border-bottom: none;
-}
-
-.thumb {
-  width: 3.5rem;
-  height: 4.5rem;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-  background: var(--color-cream-dark);
-  flex-shrink: 0;
-}
-
-.lineBody {
-  flex: 1;
-  min-width: 0;
-}
-
-.lineName {
-  font-size: var(--font-size-sm);
+.checkoutBtn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--space-xs);
-  line-height: var(--line-height-tight);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+  cursor: pointer;
 }
 
-.lineMeta {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
-.lineExpiry {
-  font-size: var(--font-size-xs);
-  color: var(--color-primary);
-  margin: var(--space-xs) 0 0;
-  font-variant-numeric: tabular-nums;
-}
-
-.lineLink {
-  color: var(--color-primary);
-  font-size: var(--font-size-xs);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.lineLink:hover {
-  color: var(--color-primary-dark);
+.checkoutBtn:hover {
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
 }

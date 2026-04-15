@@ -10,7 +10,7 @@ import { formatPriceIls } from "../lib/formatPrice";
 import styles from "./AccountPage.module.css";
 
 const FALLBACK_IMAGE =
-  "https://placehold.co/600x800/FAF8F2/2C1A0E?text=%3F";
+  "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F";
 
 type TabId = "wishlist" | "orders";
 

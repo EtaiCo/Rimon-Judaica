@@ -1,27 +1,37 @@
 import styles from "./HeroImage.module.css";
 
 const DEFAULT_SRC =
-  "https://placehold.co/1920x520/FAF8F2/2C1A0E?text=%D7%A8%D7%99%D7%9E%D7%95%D7%9F+%D7%99%D7%95%D7%93%D7%90%D7%99%D7%A7%D7%94";
+  "https://placehold.co/1920x900/FFFFFF/5C2330?text=%D7%A8%D7%99%D7%9E%D7%95%D7%9F+%D7%99%D7%95%D7%93%D7%90%D7%99%D7%A7%D7%94";
 
 interface HeroImageProps {
   src?: string;
   alt?: string;
-  title?: string;
+  isLoading?: boolean;
 }
 
 export function HeroImage({
-  src = DEFAULT_SRC,
+  src,
   alt = "רימון יודאיקה — דף הבית",
-  title = "רימון יודאיקה",
+  isLoading = false,
 }: HeroImageProps) {
+  const resolvedSrc = src?.trim() || DEFAULT_SRC;
+
   return (
-    <section className={styles.wrapper} aria-label={title}>
-      <div className={styles.headlineRow}>
-        <h1 className={styles.headline}>{title}</h1>
-      </div>
+    <section className={styles.wrapper} aria-label={alt}>
       <div className={styles.bleed}>
         <div className={styles.frame}>
-          <img src={src} alt={alt} className={styles.image} />
+          {isLoading ? (
+            <div className={styles.imagePlaceholder} aria-hidden="true" />
+          ) : (
+            <img
+              src={resolvedSrc}
+              alt={alt}
+              className={styles.image}
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
+            />
+          )}
         </div>
       </div>
     </section>

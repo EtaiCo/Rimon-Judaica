@@ -12,7 +12,7 @@ import { formatPriceIls } from "../lib/formatPrice";
 import styles from "./OrderDetailPage.module.css";
 
 const FALLBACK_IMAGE =
-  "https://placehold.co/600x800/FAF8F2/2C1A0E?text=%3F";
+  "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F";
 
 function shortOrderRef(id: string): string {
   return id.replace(/-/g, "").slice(0, 8).toUpperCase();

@@ -1,22 +1,20 @@
-import type { MouseEvent } from "react";
+import { memo, useCallback, useMemo, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import type { ProductVariant, ProductWithVariants } from "@rimon/shared-types";
-
-type ProductCardProduct = Pick<
-  ProductWithVariants,
-  "id" | "name" | "slug" | "variants" | "minPrice"
->;
 import { useAuth } from "../../auth/AuthContext";
 import { useCart } from "../../cart/CartContext";
 import { useWishlist } from "../../wishlist/WishlistContext";
 import { formatPriceIls } from "../../lib/formatPrice";
 import { pickDisplayVariant } from "../../lib/productDisplay";
+import { PRODUCT_IMAGE_FALLBACK } from "../../lib/productImageFallback";
 import styles from "./ProductCard.module.css";
 
-const FALLBACK_IMAGE =
-  "https://placehold.co/600x800/FAF8F2/2C1A0E?text=%3F";
+type ProductCardProduct = Pick<
+  ProductWithVariants,
+  "id" | "name" | "slug" | "variants" | "minPrice"
+>;
 
 interface ProductCardProps {
   product: ProductCardProduct;
@@ -27,72 +25,87 @@ function StockBadge({ variant }: { variant: ProductVariant }) {
   return (
     <span
       className={`${styles.badge} ${inStock ? styles.badgeInStock : styles.badgeOut}`}
-      aria-label={inStock ? "זמין במלאי" : "אזל מהמלאי"}
+      aria-label={inStock ? "זמין במלאי" : "לא זמין במלאי"}
     >
-      {inStock ? "זמין במלאי" : "אזל מהמלאי"}
+      {inStock ? "זמין במלאי" : "לא זמין במלאי"}
     </span>
   );
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+function ProductCardImpl({ product }: ProductCardProps) {
   const { accessToken } = useAuth();
   const { addToCart } = useCart();
   const { isWishlisted, toggleWishlist } = useWishlist();
-  const displayVariant = pickDisplayVariant(product.variants);
-  const priceLabel =
-    product.minPrice != null
-      ? formatPriceIls(product.minPrice)
-      : displayVariant
-        ? formatPriceIls(displayVariant.price)
-        : "—";
+  const displayVariant = useMemo(
+    () => pickDisplayVariant(product.variants),
+    [product.variants],
+  );
+  const priceLabel = useMemo(
+    () =>
+      product.minPrice != null
+        ? formatPriceIls(product.minPrice)
+        : displayVariant
+          ? formatPriceIls(displayVariant.price)
+          : "—",
+    [displayVariant, product.minPrice],
+  );
 
-  const src =
-    displayVariant?.imageUrl?.trim() ||
-    product.variants.find((v) => v.imageUrl?.trim())?.imageUrl?.trim() ||
-    FALLBACK_IMAGE;
+  const src = useMemo(
+    () =>
+      displayVariant?.imageUrl?.trim() ||
+      product.variants.find((v) => v.imageUrl?.trim())?.imageUrl?.trim() ||
+      PRODUCT_IMAGE_FALLBACK,
+    [displayVariant?.imageUrl, product.variants],
+  );
 
-  async function handleAdd(e: MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!displayVariant) return;
-    if (displayVariant.stockQuantity <= 0) return;
-    const meta =
-      accessToken == null
-        ? {
-            productId: product.id,
-            productName: product.name,
-            productSlug: product.slug,
-            variantName: displayVariant.variantName,
-            price: displayVariant.price,
-            imageUrl: displayVariant.imageUrl,
-          }
-        : undefined;
-    const result = await addToCart(displayVariant.id, 1, meta);
-    if (result.ok) {
-      toast.success("הפריט נוסף לעגלה");
-    } else {
-      toast.error(result.error);
-    }
-  }
+  const handleAdd = useCallback(
+    async (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!displayVariant) return;
+      if (displayVariant.stockQuantity <= 0) return;
+      const meta =
+        accessToken == null
+          ? {
+              productId: product.id,
+              productName: product.name,
+              productSlug: product.slug,
+              variantName: displayVariant.variantName,
+              price: displayVariant.price,
+              imageUrl: displayVariant.imageUrl,
+            }
+          : undefined;
+      const result = await addToCart(displayVariant.id, 1, meta);
+      if (result.ok) {
+        toast.success("הפריט נוסף לעגלה");
+      } else {
+        toast.error(result.error);
+      }
+    },
+    [accessToken, addToCart, displayVariant, product.id, product.name, product.slug],
+  );
 
-  async function handleWishlist(e: MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!displayVariant) return;
-    if (!accessToken) {
-      toast.error("התחברו כדי לשמור מוצרים לרשימה.");
-      return;
-    }
-    const wasWishlisted = isWishlisted(displayVariant.id);
-    const result = await toggleWishlist(displayVariant.id);
-    if (result.ok) {
-      toast.success(
-        wasWishlisted ? "הוסר מהרשימה" : "נוסף לרשימה שלך",
-      );
-    } else {
-      toast.error(result.error);
-    }
-  }
+  const handleWishlist = useCallback(
+    async (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!displayVariant) return;
+      if (!accessToken) {
+        toast.error("התחברו כדי לשמור מוצרים לרשימה.");
+        return;
+      }
+      const wasWishlisted = isWishlisted(displayVariant.id);
+      const result = await toggleWishlist(displayVariant.id);
+      if (result.ok) {
+        toast.success(
+          wasWishlisted ? "הוסר מהרשימה" : "נוסף לרשימה שלך",
+        );
+      } else {
+        toast.error(result.error);
+      }
+    },
+    [accessToken, displayVariant, isWishlisted, toggleWishlist],
+  );
 
   const wishlisted =
     displayVariant != null && isWishlisted(displayVariant.id);
@@ -113,7 +126,7 @@ export function ProductCard({ product }: ProductCardProps) {
           >
             <Heart
               size={18}
-              strokeWidth={1.75}
+              strokeWidth={1.25}
               aria-hidden
               fill={wishlisted ? "currentColor" : "none"}
             />
@@ -124,7 +137,13 @@ export function ProductCard({ product }: ProductCardProps) {
           className={styles.imageLink}
           aria-label={`${product.name} — ${priceLabel}`}
         >
-          <img src={src} alt="" className={styles.image} loading="lazy" />
+          <img
+            src={src}
+            alt=""
+            className={styles.image}
+            loading="lazy"
+            decoding="async"
+          />
         </Link>
       </div>
       <div className={styles.footer}>
@@ -146,3 +165,5 @@ export function ProductCard({ product }: ProductCardProps) {
     </article>
   );
 }
+
+export const ProductCard = memo(ProductCardImpl);

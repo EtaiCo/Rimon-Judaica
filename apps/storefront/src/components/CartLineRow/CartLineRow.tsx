@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import styles from "./CartLineRow.module.css";
 
 const FALLBACK_IMAGE =
-  "https://placehold.co/120x160/FAF8F2/2C1A0E?text=%3F";
+  "https://placehold.co/120x160/FFFFFF/5C2330?text=%3F";
 
 export interface CartLineRowDisplay {
   id: string;
@@ -39,7 +40,7 @@ function formatExpiryHe(iso: string): string {
   }
 }
 
-export function CartLineRow({
+function CartLineRowImpl({
   line,
   shelfStock,
   expiresAt,
@@ -110,7 +111,7 @@ export function CartLineRow({
       <div
         className={`${styles.thumbWrap} ${compact ? styles.thumbWrapCompact : ""}`}
       >
-        <img src={src} alt="" className={styles.thumb} />
+        <img src={src} alt="" className={styles.thumb} loading="lazy" decoding="async" />
       </div>
       <div className={styles.main}>
         <div className={styles.topRow}>
@@ -149,3 +150,5 @@ export function CartLineRow({
     </div>
   );
 }
+
+export const CartLineRow = memo(CartLineRowImpl);

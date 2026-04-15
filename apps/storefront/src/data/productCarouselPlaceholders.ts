@@ -6,7 +6,7 @@ export const PRODUCT_CAROUSEL_PLACEHOLDERS: ProductCarouselItem[] = [
     name: "סידור ירושלים המפואר",
     priceLabel: "₪120",
     imageUrl:
-      "https://placehold.co/600x800/F0EDE0/2C1A0E?text=%3F",
+      "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F",
     href: "#",
   },
   {
@@ -14,7 +14,7 @@ export const PRODUCT_CAROUSEL_PLACEHOLDERS: ProductCarouselItem[] = [
     name: "מחזור וינה מהודר",
     priceLabel: "₪89",
     imageUrl:
-      "https://placehold.co/600x800/FAF8F2/4A2E1A?text=%3F",
+      "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F",
     href: "#",
   },
   {
@@ -22,7 +22,7 @@ export const PRODUCT_CAROUSEL_PLACEHOLDERS: ProductCarouselItem[] = [
     name: "תהילים כיס עור",
     priceLabel: "₪45",
     imageUrl:
-      "https://placehold.co/600x800/F0EDE0/2C1A0E?text=%3F",
+      "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F",
     href: "#",
   },
   {
@@ -30,7 +30,7 @@ export const PRODUCT_CAROUSEL_PLACEHOLDERS: ProductCarouselItem[] = [
     name: "חנוכייה כסף טהור",
     priceLabel: "₪340",
     imageUrl:
-      "https://placehold.co/600x800/FAF8F2/2C1A0E?text=%3F",
+      "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F",
     href: "#",
   },
   {
@@ -38,7 +38,7 @@ export const PRODUCT_CAROUSEL_PLACEHOLDERS: ProductCarouselItem[] = [
     name: "קערת שבת קריסטל",
     priceLabel: "₪210",
     imageUrl:
-      "https://placehold.co/600x800/F0EDE0/4A2E1A?text=%3F",
+      "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F",
     href: "#",
   },
   {
@@ -46,7 +46,7 @@ export const PRODUCT_CAROUSEL_PLACEHOLDERS: ProductCarouselItem[] = [
     name: "מזוזה פיוטר",
     priceLabel: "₪75",
     imageUrl:
-      "https://placehold.co/600x800/FAF8F2/2C1A0E?text=%3F",
+      "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F",
     href: "#",
   },
   {
@@ -54,7 +54,7 @@ export const PRODUCT_CAROUSEL_PLACEHOLDERS: ProductCarouselItem[] = [
     name: "טלית חלקה לבנה",
     priceLabel: "₪420",
     imageUrl:
-      "https://placehold.co/600x800/F0EDE0/2C1A0E?text=%3F",
+      "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F",
     href: "#",
   },
   {
@@ -62,7 +62,7 @@ export const PRODUCT_CAROUSEL_PLACEHOLDERS: ProductCarouselItem[] = [
     name: "מגילת אסתר מהודרת",
     priceLabel: "₪95",
     imageUrl:
-      "https://placehold.co/600x800/FAF8F2/4A2E1A?text=%3F",
+      "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F",
     href: "#",
   },
 ];

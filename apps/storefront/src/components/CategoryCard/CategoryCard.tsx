@@ -3,7 +3,7 @@ import type { Category } from "@rimon/shared-types";
 import styles from "./CategoryCard.module.css";
 
 const FALLBACK_IMAGE =
-  "https://placehold.co/600x800/FAF8F2/2C1A0E?text=%D7%A7%D7%98%D7%92%D7%95%D7%A8%D7%99%D7%94";
+  "https://placehold.co/600x800/FFFFFF/5C2330?text=%D7%A7%D7%98%D7%92%D7%95%D7%A8%D7%99%D7%94";
 
 interface CategoryCardProps {
   category: Category;

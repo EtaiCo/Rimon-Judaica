@@ -37,10 +37,11 @@
 }
 
 .mainImageWrap {
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  background: var(--color-cream-dark);
-  box-shadow: var(--shadow-md);
+  background: var(--color-gray-100);
+  border: 1px solid var(--color-border);
+  box-shadow: none;
 }
 
 .mainImage {
@@ -97,16 +98,18 @@
   font-family: var(--font-family-heading);
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-primary);
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-heading);
   margin: 0;
   line-height: var(--line-height-tight);
 }
 
 .price {
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-accent);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
   margin: 0;
 }
 
@@ -162,7 +165,7 @@
 
 .variantBtnActive {
   border-color: var(--color-primary);
-  background: var(--color-cream-dark);
+  background: var(--color-gray-100);
   font-weight: var(--font-weight-semibold);
 }
 
@@ -172,28 +175,28 @@
   max-width: 20rem;
   align-self: flex-start;
   font-family: var(--font-family-body);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
   padding: var(--space-md) var(--space-xl);
-  border: none;
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
   background: var(--color-primary);
-  color: var(--color-cream);
+  color: var(--color-text-inverse);
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
   transition:
     background var(--transition-fast),
-    transform var(--transition-fast);
+    border-color var(--transition-fast);
 }
 
 .addToCart:hover {
   background: var(--color-primary-dark);
-  transform: translateY(-1px);
+  border-color: var(--color-primary-dark);
 }
 
 .addToCart:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+  outline: 1px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .state {

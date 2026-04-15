@@ -5,6 +5,15 @@ export interface Category {
   parentId: string | null;
   imageUrl?: string;
   children?: Category[];
+  subCategories?: SubCategory[];
+}
+
+export interface SubCategory {
+  id: string;
+  categoryId: string;
+  name: string;
+  slug: string;
+  createdAt?: string;
 }
 
 export interface Product {
@@ -46,5 +55,6 @@ export interface CategoryProduct {
 
 export interface CategoryProductsResponse {
   category: Pick<Category, "id" | "name" | "slug">;
+  subCategory?: Pick<SubCategory, "id" | "name" | "slug">;
   products: CategoryProduct[];
 }

@@ -1,24 +1,7 @@
 .wrapper {
   width: 100%;
-  background: var(--color-background);
-  padding-block: var(--space-section-y);
-}
-
-.headlineRow {
-  max-width: var(--container-max-width);
-  margin-inline: auto;
-  padding-inline: var(--space-lg);
-  margin-bottom: var(--space-lg);
-}
-
-.headline {
-  font-family: var(--font-family-heading);
-  font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-4xl));
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  text-align: center;
-  margin: 0;
-  line-height: var(--line-height-tight);
+  background: var(--color-white);
+  padding-block: var(--space-md) var(--space-section-y);
 }
 
 .bleed {
@@ -32,13 +15,26 @@
   position: relative;
   overflow: hidden;
   border-radius: 0;
-  background: var(--color-cream-dark);
+  background: var(--color-gray-100);
 }
 
 .image {
   display: block;
   width: 100%;
-  min-height: clamp(200px, 32vw, 380px);
-  max-height: 480px;
+  min-height: min(70vh, 640px);
+  max-height: 85vh;
   object-fit: cover;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  min-height: min(70vh, 640px);
+  max-height: 85vh;
+  background:
+    linear-gradient(
+      135deg,
+      var(--color-gray-100) 0%,
+      var(--color-white) 45%,
+      var(--color-gray-100) 100%
+    );
 }

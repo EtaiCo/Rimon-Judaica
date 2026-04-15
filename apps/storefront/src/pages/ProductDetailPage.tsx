@@ -9,7 +9,7 @@ import { formatPriceIls } from "../lib/formatPrice";
 import styles from "./ProductDetailPage.module.css";
 
 const FALLBACK_IMAGE =
-  "https://placehold.co/800x1000/FAF8F2/2C1A0E?text=%3F";
+  "https://placehold.co/800x1000/FFFFFF/5C2330?text=%3F";
 
 export function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
