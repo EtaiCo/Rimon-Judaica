@@ -5,6 +5,7 @@ import { ChevronDown, ShoppingCart, User } from "lucide-react";
 import { useAuth } from "../../auth/AuthContext";
 import { useBootstrap } from "../../context/BootstrapContext";
 import { useCart } from "../../cart/CartContext";
+import { prefetchCategoryProducts } from "../../lib/cacheService";
 import styles from "./Header.module.css";
 
 const GUEST_CART_TOOLTIP =
@@ -103,6 +104,15 @@ export function Header({ onOpenCart }: HeaderProps) {
       window.removeEventListener("mousedown", onDown);
     };
   }, [openCategorySlug]);
+
+  useEffect(() => {
+    if (!openCategorySlug) return;
+    const parent = categories.find((c) => c.slug === openCategorySlug);
+    if (!parent?.subCategories?.length) return;
+    for (const sub of parent.subCategories) {
+      void prefetchCategoryProducts(parent.slug, sub.slug);
+    }
+  }, [openCategorySlug, categories]);
 
   useEffect(() => () => clearCloseTimer(), [clearCloseTimer]);
 

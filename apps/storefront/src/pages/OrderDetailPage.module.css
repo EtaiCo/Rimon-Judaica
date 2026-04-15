@@ -93,6 +93,19 @@
   gap: var(--space-md);
 }
 
+.productNameLink {
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-normal);
+  letter-spacing: normal;
+  line-height: var(--line-height-relaxed);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.productNameLink:hover {
+  text-decoration: underline;
+}
+
 .meta {
   color: var(--color-text-secondary);
   font-size: var(--font-size-xs);

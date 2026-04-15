@@ -27,7 +27,7 @@ export function ProductCarouselCard({ product }: ProductCarouselCardProps) {
       aria-label={`${product.name} — ${product.priceLabel}`}
     >
       <div className={styles.imageWrap}>
-        <img src={src} alt="" className={styles.image} loading="lazy" />
+        <img src={src} alt="" className={styles.image} loading="lazy" decoding="async" />
       </div>
       <div className={styles.footer}>
         <h3 className={styles.name}>{product.name}</h3>

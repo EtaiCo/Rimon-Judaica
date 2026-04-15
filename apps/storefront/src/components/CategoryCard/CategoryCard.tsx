@@ -19,7 +19,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
       aria-label={category.name}
     >
       <div className={styles.imageWrap}>
-        <img src={src} alt="" className={styles.image} loading="lazy" />
+        <img src={src} alt="" className={styles.image} loading="lazy" decoding="async" />
       </div>
       <div className={styles.footer}>
         <h3 className={styles.title}>{category.name}</h3>

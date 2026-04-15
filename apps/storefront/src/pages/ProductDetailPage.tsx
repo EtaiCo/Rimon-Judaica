@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import type { ProductVariant, ProductWithVariants } from "@rimon/shared-types";
@@ -6,6 +6,8 @@ import { Layout } from "../components/Layout/Layout";
 import { useAuth } from "../auth/AuthContext";
 import { useCart } from "../cart/CartContext";
 import { formatPriceIls } from "../lib/formatPrice";
+import { CACHE_KEYS } from "../lib/cacheService";
+import { useStaleWhileRevalidate } from "../hooks/useStaleWhileRevalidate";
 import styles from "./ProductDetailPage.module.css";
 
 const FALLBACK_IMAGE =
@@ -15,53 +17,18 @@ export function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { accessToken } = useAuth();
   const { addToCart } = useCart();
-  const [product, setProduct] = useState<ProductWithVariants | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!id) {
-      setError("מוצר לא נמצא.");
-      setLoading(false);
-      return;
-    }
-    let cancelled = false;
-    (async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await fetch(`/api/products/${encodeURIComponent(id)}`);
-        const data = (await res.json()) as { error?: string };
-        if (!res.ok) {
-          if (!cancelled) {
-            setError(
-              typeof data.error === "string" ? data.error : "שגיאה בטעינה.",
-            );
-            setProduct(null);
-          }
-          return;
-        }
-        if (!cancelled) {
-          setProduct(data as ProductWithVariants);
-        }
-      } catch {
-        if (!cancelled) {
-          setError("לא ניתן לטעון את המוצר.");
-          setProduct(null);
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
+  const cacheKey = id ? CACHE_KEYS.product(id) : null;
+  const fetcher = useCallback(async (): Promise<ProductWithVariants | null> => {
+    if (!id) return null;
+    const res = await fetch(`/api/products/${encodeURIComponent(id)}`);
+    if (!res.ok) return null;
+    return (await res.json()) as ProductWithVariants;
   }, [id]);
 
-  const variants = product?.variants ?? [];
-  const selected: ProductVariant | null =
-    variants.find((v) => v.id === selectedId) ?? variants[0] ?? null;
+  const { data: product, isValidating, hadCache } =
+    useStaleWhileRevalidate<ProductWithVariants>(cacheKey, cacheKey ? fetcher : null);
 
   useEffect(() => {
     if (!product?.variants.length) {
@@ -73,6 +40,10 @@ export function ProductDetailPage() {
       return product.variants[0]!.id;
     });
   }, [product]);
+
+  const variants = product?.variants ?? [];
+  const selected: ProductVariant | null =
+    variants.find((v) => v.id === selectedId) ?? variants[0] ?? null;
 
   const imageSrc =
     selected?.imageUrl?.trim() ||
@@ -103,6 +74,8 @@ export function ProductDetailPage() {
     }
   }
 
+  const showLoading = !product && isValidating;
+
   return (
     <Layout>
       <div className={styles.wrap}>
@@ -110,10 +83,23 @@ export function ProductDetailPage() {
           ← חזרה לדף הבית
         </Link>
 
-        {loading ? (
-          <p className={styles.loading}>טוען…</p>
-        ) : error || !product ? (
-          <p className={styles.error}>{error ?? "מוצר לא נמצא."}</p>
+        {showLoading ? (
+          <div className={styles.grid}>
+            <div className={styles.imageCol}>
+              <div className={styles.imageWrap}>
+                {!hadCache && (
+                  <span className={styles.loading}>טוען…</span>
+                )}
+              </div>
+            </div>
+            <div>
+              <div className={styles.skeletonTitle} aria-hidden />
+              <div className={styles.skeletonDesc} aria-hidden />
+              <div className={styles.skeletonPrice} aria-hidden />
+            </div>
+          </div>
+        ) : !product ? (
+          <p className={styles.error}>מוצר לא נמצא.</p>
         ) : (
           <div className={styles.grid}>
             <div className={styles.imageCol}>
@@ -129,6 +115,7 @@ export function ProductDetailPage() {
                   src={imageSrc}
                   alt=""
                   className={styles.image}
+                  decoding="async"
                 />
               </div>
             </div>

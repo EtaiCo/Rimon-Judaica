@@ -130,8 +130,11 @@
 }
 
 .wishName {
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-body);
   font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  letter-spacing: normal;
   margin: 0;
   color: var(--color-text-primary);
 }

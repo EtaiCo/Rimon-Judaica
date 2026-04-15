@@ -95,13 +95,13 @@
 }
 
 .title {
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-body);
   font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-normal);
   color: var(--color-text-primary);
-  letter-spacing: var(--letter-spacing-heading);
+  letter-spacing: normal;
   margin: 0;
-  line-height: var(--line-height-tight);
+  line-height: var(--line-height-relaxed);
 }
 
 .price {

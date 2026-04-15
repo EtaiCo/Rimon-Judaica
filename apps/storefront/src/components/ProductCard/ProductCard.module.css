@@ -118,14 +118,14 @@
 }
 
 .name {
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-body);
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-normal);
   color: var(--color-text-primary);
   text-align: right;
   margin: 0;
-  line-height: var(--line-height-tight);
-  letter-spacing: var(--letter-spacing-heading);
+  line-height: var(--line-height-relaxed);
+  letter-spacing: normal;
   transition: color var(--transition-fast);
 }
 

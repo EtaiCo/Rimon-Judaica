@@ -7,13 +7,14 @@
 }
 
 .sectionTitle {
-  font-family: var(--font-family-heading);
+  font-family: var(--font-family-body);
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-normal);
   color: var(--color-text-primary);
   margin: 0 0 var(--space-xl);
   text-align: center;
-  letter-spacing: var(--letter-spacing-heading);
+  letter-spacing: normal;
+  line-height: var(--line-height-relaxed);
 }
 
 .feedback,

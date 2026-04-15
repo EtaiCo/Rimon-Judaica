@@ -63,7 +63,16 @@ export function AccountPage() {
   if (!isReady) {
     return (
       <Layout>
-        <div className={styles.loading}>טוען…</div>
+        <div className={styles.wrap}>
+          <h1 className={styles.title}>האזור האישי</h1>
+          <div className={styles.tabs} role="tablist" aria-label="תפריט אזור אישי">
+            <span className={styles.tabActive}>הרשימה שלי</span>
+            <span className={styles.tab}>היסטוריית הזמנות</span>
+          </div>
+          <div className={styles.card}>
+            <p className={styles.loading}>טוען…</p>
+          </div>
+        </div>
       </Layout>
     );
   }
@@ -182,6 +191,7 @@ function WishlistCard({
           alt=""
           className={styles.wishImg}
           loading="lazy"
+          decoding="async"
         />
       </Link>
       <div className={styles.wishBody}>

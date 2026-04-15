@@ -99,7 +99,12 @@ export function OrderDetailPage() {
   if (!isReady) {
     return (
       <Layout>
-        <div className={styles.loading}>טוען…</div>
+        <div className={styles.wrap}>
+          <Link className={styles.back} to="/account">
+            חזרה להיסטוריית הזמנות
+          </Link>
+          <p className={styles.loading}>טוען…</p>
+        </div>
       </Layout>
     );
   }
@@ -172,15 +177,12 @@ export function OrderDetailPage() {
                               alt=""
                               className={styles.thumb}
                               loading="lazy"
+                              decoding="async"
                             />
                             <div>
                               <Link
                                 to={`/product/${item.productId}`}
-                                style={{
-                                  color: "var(--color-primary)",
-                                  fontWeight: 600,
-                                  textDecoration: "none",
-                                }}
+                                className={styles.productNameLink}
                               >
                                 {item.productName}
                               </Link>

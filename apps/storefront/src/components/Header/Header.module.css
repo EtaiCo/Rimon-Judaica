@@ -236,7 +236,9 @@
   gap: 0.35rem;
   font-family: var(--font-family-body);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  letter-spacing: normal;
   color: var(--color-text-secondary);
   text-decoration: none;
   background: transparent;
@@ -283,7 +285,11 @@
   padding: 0.45rem 0.8rem;
   text-decoration: none;
   color: var(--color-text-secondary);
+  font-family: var(--font-family-body);
   font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  letter-spacing: normal;
   white-space: nowrap;
   pointer-events: auto;
 }

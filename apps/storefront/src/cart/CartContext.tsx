@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import type { CartLine } from "@rimon/shared-types";
 import { useAuth } from "../auth/AuthContext";
 import { apiFetch } from "../lib/api";
+import { CACHE_KEYS, readJson, writeJson, stableStringify } from "../lib/cacheService";
 import {
   type GuestLineMeta,
   readGuestCart,
@@ -56,7 +57,7 @@ export interface CartContextValue {
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const { accessToken, isReady } = useAuth();
+  const { accessToken, customer, isReady } = useAuth();
   const [guestItems, setGuestItems] = useState<GuestCartLine[]>([]);
   const [serverItems, setServerItems] = useState<CartLine[]>([]);
   const [loading, setLoading] = useState(false);
@@ -75,7 +76,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const isGuest = !accessToken;
 
   const loadServerCart = useCallback(async (token: string) => {
-    setLoading(true);
+    const hasSnapshot = serverItemsRef.current.length > 0;
+    if (!hasSnapshot) setLoading(true);
     try {
       const res = await apiFetch("/api/cart", { accessToken: token });
       if (!res.ok) {
@@ -83,13 +85,20 @@ export function CartProvider({ children }: { children: ReactNode }) {
         return;
       }
       const data = (await res.json()) as unknown;
-      setServerItems(Array.isArray(data) ? (data as CartLine[]) : []);
+      const lines = Array.isArray(data) ? (data as CartLine[]) : [];
+      setServerItems((prev) => {
+        if (stableStringify(prev) === stableStringify(lines)) return prev;
+        return lines;
+      });
+      if (customer?.id) {
+        writeJson(CACHE_KEYS.serverCart(customer.id), lines);
+      }
     } catch {
       setServerItems([]);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [customer?.id]);
 
   const refreshCart = useCallback(async () => {
     if (accessToken) {
@@ -107,6 +116,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (prev === undefined) {
       prevTokenRef.current = token;
       if (token) {
+        if (customer?.id) {
+          const cached = readJson<CartLine[]>(CACHE_KEYS.serverCart(customer.id));
+          if (cached && cached.length > 0) setServerItems(cached);
+        }
         void loadServerCart(token);
       } else {
         setGuestItems(readGuestCart());

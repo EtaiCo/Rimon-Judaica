@@ -117,6 +117,7 @@ export function ProductPage() {
                   src={variantImage(selected)}
                   alt=""
                   className={styles.mainImage}
+                  decoding="async"
                 />
               </div>
             )}
@@ -137,6 +138,8 @@ export function ProductPage() {
                         src={variantImage(v)}
                         alt=""
                         className={styles.thumbImg}
+                        loading="lazy"
+                        decoding="async"
                       />
                     </button>
                   );

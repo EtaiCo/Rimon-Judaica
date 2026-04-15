@@ -58,10 +58,11 @@
 }
 
 .name {
-  font-family: var(--font-family-heading);
-  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-normal);
   font-size: var(--font-size-base);
-  letter-spacing: var(--letter-spacing-heading);
+  letter-spacing: normal;
+  line-height: var(--line-height-relaxed);
   margin: 0 0 var(--space-xs);
   color: var(--color-text-primary);
 }
