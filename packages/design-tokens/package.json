@@ -1,7 +1,0 @@
-{
-  "name": "@rimon/design-tokens",
-  "version": "0.0.0",
-  "private": true,
-  "main": "tokens.css",
-  "files": ["tokens.css"]
-}

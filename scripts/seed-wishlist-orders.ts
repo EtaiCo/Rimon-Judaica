@@ -2,7 +2,7 @@
  * Seeds wishlist rows and exactly 3 demo orders (distinct shipping + invoice #s)
  * for an existing customer.
  *
- * Env (from services/core-service/.env or process):
+ * Env (from apps/services/core-service/.env or process):
  *   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
  *   SEED_CUSTOMER_EMAIL — required; must match a row in `customers`.
  *
@@ -17,7 +17,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-config({ path: path.resolve(__dirname, "../services/core-service/.env") });
+config({ path: path.resolve(__dirname, "../apps/services/core-service/.env") });
 
 const INVOICES = ["RJ-2026-001", "RJ-2026-002", "RJ-2026-003"] as const;
 

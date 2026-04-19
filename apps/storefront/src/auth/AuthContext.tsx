@@ -11,10 +11,10 @@ import type { Customer } from "@rimon/shared-types";
 
 const STORAGE_KEY = "rimon_session";
 
-export interface AuthSession {
+export type AuthSession = {
   customer: Customer;
   accessToken: string;
-}
+};
 
 function parseStoredSession(raw: string | null): AuthSession | null {
   if (!raw?.trim()) return null;
@@ -54,13 +54,13 @@ function parseStoredSession(raw: string | null): AuthSession | null {
   }
 }
 
-interface AuthContextValue {
+type AuthContextValue = {
   customer: Customer | null;
   accessToken: string | null;
   isReady: boolean;
   setSession: (session: AuthSession) => void;
   clearSession: () => void;
-}
+};
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 

@@ -1,4 +1,4 @@
-export interface Category {
+export type Category = {
   id: string;
   name: string;
   slug: string;
@@ -6,26 +6,26 @@ export interface Category {
   imageUrl?: string;
   children?: Category[];
   subCategories?: SubCategory[];
-}
+};
 
-export interface SubCategory {
+export type SubCategory = {
   id: string;
   categoryId: string;
   name: string;
   slug: string;
   createdAt?: string;
-}
+};
 
-export interface Product {
+export type Product = {
   id: string;
   categoryId: string;
   name: string;
   slug: string;
   description: string;
   createdAt: string;
-}
+};
 
-export interface ProductVariant {
+export type ProductVariant = {
   id: string;
   productId: string;
   variantName: string;
@@ -33,7 +33,7 @@ export interface ProductVariant {
   stockQuantity: number;
   sku: string;
   imageUrl?: string;
-}
+};
 
 export type ProductWithVariants = Product & {
   variants: ProductVariant[];
@@ -42,7 +42,7 @@ export type ProductWithVariants = Product & {
 };
 
 /** Product row for category listing (variants for cards + listing price). */
-export interface CategoryProduct {
+export type CategoryProduct = {
   id: string;
   name: string;
   slug: string;
@@ -51,10 +51,15 @@ export interface CategoryProduct {
   price: number;
   minPrice?: number;
   variants: ProductVariant[];
-}
+};
 
-export interface CategoryProductsResponse {
+export type CategoryProductsResponse = {
   category: Pick<Category, "id" | "name" | "slug">;
   subCategory?: Pick<SubCategory, "id" | "name" | "slug">;
   products: CategoryProduct[];
-}
+};
+
+export type ProductSearchResponse = {
+  products: ProductWithVariants[];
+  suggestions: string[];
+};

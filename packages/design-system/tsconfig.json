@@ -1,0 +1,7 @@
+{
+  "extends": "@rimon/config-ts/react.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["src"]
+}

@@ -1,11 +1,11 @@
 import type { Category } from "./product";
 
-export interface SiteImageSetting {
+export type SiteImageSetting = {
   imageUrl?: string;
-}
+};
 
-export interface BootstrapPayload {
+export type BootstrapPayload = {
   hero: SiteImageSetting;
   logo: SiteImageSetting;
   categories: Category[];
-}
+};

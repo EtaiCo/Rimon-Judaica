@@ -1,5 +1,5 @@
 /** One wishlist row after joins (API GET /api/wishlist). */
-export interface WishlistLine {
+export type WishlistLine = {
   id: string;
   variantId: string;
   createdAt: string;
@@ -11,4 +11,4 @@ export interface WishlistLine {
   productId: string;
   productName: string;
   productSlug: string;
-}
+};

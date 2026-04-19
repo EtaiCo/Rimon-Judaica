@@ -16,9 +16,9 @@ type ProductCardProduct = Pick<
   "id" | "name" | "slug" | "variants" | "minPrice"
 >;
 
-interface ProductCardProps {
+type ProductCardProps = {
   product: ProductCardProduct;
-}
+};
 
 function StockBadge({ variant }: { variant: ProductVariant }) {
   const inStock = variant.stockQuantity > 0;

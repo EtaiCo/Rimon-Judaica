@@ -1,6 +1,6 @@
 export type CustomerType = "private" | "wholesale";
 
-export interface Customer {
+export type Customer = {
   id: string;
   full_name: string;
   email: string;
@@ -8,4 +8,4 @@ export interface Customer {
   customer_type: CustomerType;
   created_at: string;
   last_login?: string;
-}
+};

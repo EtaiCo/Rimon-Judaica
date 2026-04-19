@@ -69,10 +69,10 @@ export function deduped<T>(key: string, fetcher: () => Promise<T>): Promise<T> {
 // Fetch-with-SWR (imperative, non-React)
 // ---------------------------------------------------------------------------
 
-export interface SwrResult<T> {
+export type SwrResult<T> = {
   cached: T | null;
   fresh: Promise<T | null>;
-}
+};
 
 /**
  * Read cached data synchronously, then kick off a background fetch that

@@ -1,7 +1,7 @@
 const STORAGE_KEY = "rimon_guest_cart";
 
 /** Persisted guest cart row with display snapshot at add time. */
-export interface GuestCartLine {
+export type GuestCartLine = {
   id: string;
   variantId: string;
   quantity: number;
@@ -11,17 +11,17 @@ export interface GuestCartLine {
   variantName: string;
   price: number;
   imageUrl?: string;
-}
+};
 
 /** Metadata required when adding to guest cart (from product + variant). */
-export interface GuestLineMeta {
+export type GuestLineMeta = {
   productId: string;
   productName: string;
   productSlug: string;
   variantName: string;
   price: number;
   imageUrl?: string;
-}
+};
 
 function isGuestCartLine(v: unknown): v is GuestCartLine {
   if (!v || typeof v !== "object") return false;

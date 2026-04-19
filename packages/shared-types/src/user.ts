@@ -1,15 +1,15 @@
-export interface User {
+export type User = {
   id: string;
   email: string;
   fullName: string;
   phone?: string;
   address?: Address;
   createdAt: string;
-}
+};
 
-export interface Address {
+export type Address = {
   street: string;
   city: string;
   postalCode?: string;
   country: string;
-}
+};

@@ -23,12 +23,12 @@ app.listen(config.port, () => {
   console.log(`[core-service] Running on http://localhost:${config.port}`);
   if (!process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()) {
     console.warn(
-      "[core-service] SUPABASE_SERVICE_ROLE_KEY is missing. Set it in services/core-service/.env — /api/products returns 503 until then.",
+      "[core-service] SUPABASE_SERVICE_ROLE_KEY is missing. Set it in apps/services/core-service/.env — /api/products returns 503 until then.",
     );
   }
   if (!process.env.JWT_SECRET?.trim()) {
     console.warn(
-      "[core-service] JWT_SECRET is missing. Set it in services/core-service/.env — login/register and /api/cart will fail until then.",
+      "[core-service] JWT_SECRET is missing. Set it in apps/services/core-service/.env — login/register and /api/cart will fail until then.",
     );
   }
 });

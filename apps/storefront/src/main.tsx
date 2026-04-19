@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "sonner";
-import "@rimon/design-tokens/tokens.css";
+import "@rimon/design-system/tokens.css";
 import "./styles/global.css";
 import { AuthProvider } from "./auth/AuthContext";
 import { BootstrapProvider } from "./context/BootstrapContext";

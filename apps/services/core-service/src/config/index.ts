@@ -9,8 +9,8 @@ const _packageRoot = path.join(_cfgDir, "..", "..");
 const envCandidates = [
   path.join(process.cwd(), ".env"),
   path.join(process.cwd(), ".env.local"),
-  path.join(process.cwd(), "services", "core-service", ".env"),
-  path.join(process.cwd(), "services", "core-service", ".env.local"),
+  path.join(process.cwd(), "apps", "services", "core-service", ".env"),
+  path.join(process.cwd(), "apps", "services", "core-service", ".env.local"),
   path.join(_packageRoot, ".env"),
   path.join(_packageRoot, ".env.local"),
 ];
@@ -40,7 +40,7 @@ fetch("http://127.0.0.1:7506/ingest/a221c478-ae81-4876-8cff-d369da88eb5b", {
   },
   body: JSON.stringify({
     sessionId: "7d53ed",
-    location: "services/core-service/src/config/index.ts:post-dotenv",
+    location: "apps/services/core-service/src/config/index.ts:post-dotenv",
     message: "Env bootstrap after dotenv",
     data: {
       cwd: process.cwd(),
@@ -60,7 +60,7 @@ fetch("http://127.0.0.1:7506/ingest/a221c478-ae81-4876-8cff-d369da88eb5b", {
 const _packageEnvPath = path.join(_packageRoot, ".env");
 if (fs.existsSync(_packageEnvPath) && fs.statSync(_packageEnvPath).size === 0) {
   console.warn(
-    "[core-service] services/core-service/.env exists but is 0 bytes on disk. Save the file in your editor (Ctrl+S), or copy: .env.template → .env",
+    "[core-service] apps/services/core-service/.env exists but is 0 bytes on disk. Save the file in your editor (Ctrl+S), or copy: .env.template → .env",
   );
 }
 

@@ -6,12 +6,12 @@ import {
   deduped,
 } from "../lib/cacheService";
 
-export interface SwrState<T> {
+export type SwrState<T> = {
   data: T | null;
   isValidating: boolean;
   /** True when we had a cached snapshot at mount time. */
   hadCache: boolean;
-}
+};
 
 /**
  * Generic stale-while-revalidate hook backed by versioned localStorage.

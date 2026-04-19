@@ -1,5 +1,6 @@
 import { useState, type SubmitEvent } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Button, Input } from "@rimon/design-system";
 import type { CustomerType } from "@rimon/shared-types";
 import { Layout } from "../components/Layout/Layout";
 import { useAuth } from "../auth/AuthContext";
@@ -155,9 +156,8 @@ export function RegisterPage() {
               <label className={shared.label} htmlFor="reg-fullname">
                 שם מלא
               </label>
-              <input
+              <Input
                 id="reg-fullname"
-                className={shared.input}
                 type="text"
                 name="full_name"
                 autoComplete="name"
@@ -171,9 +171,8 @@ export function RegisterPage() {
               <label className={shared.label} htmlFor="reg-email">
                 אימייל
               </label>
-              <input
+              <Input
                 id="reg-email"
-                className={shared.input}
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -188,9 +187,8 @@ export function RegisterPage() {
               <label className={shared.label} htmlFor="reg-phone">
                 טלפון
               </label>
-              <input
+              <Input
                 id="reg-phone"
-                className={shared.input}
                 type="tel"
                 name="phone"
                 autoComplete="tel"
@@ -234,9 +232,8 @@ export function RegisterPage() {
               <label className={shared.label} htmlFor="reg-password">
                 סיסמה
               </label>
-              <input
+              <Input
                 id="reg-password"
-                className={shared.input}
                 type="password"
                 name="password"
                 autoComplete="new-password"
@@ -281,9 +278,8 @@ export function RegisterPage() {
               <label className={shared.label} htmlFor="reg-confirm">
                 אימות סיסמה
               </label>
-              <input
+              <Input
                 id="reg-confirm"
-                className={shared.input}
                 type="password"
                 name="confirm_password"
                 autoComplete="new-password"
@@ -293,13 +289,9 @@ export function RegisterPage() {
                 disabled={loading || success}
               />
             </div>
-            <button
-              type="submit"
-              className={shared.buttonPrimary}
-              disabled={loading || success}
-            >
+            <Button type="submit" disabled={loading || success}>
               {loading ? "נרשמים…" : "הרשמה"}
-            </button>
+            </Button>
           </form>
           <div className={shared.footerLinks}>
             <Link className={shared.link} to="/login">
