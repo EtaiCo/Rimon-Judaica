@@ -1,0 +1,22 @@
+.root {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  width: 100%;
+  padding: var(--space-sm) 0;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  background: transparent;
+  transition: border-color var(--transition-fast);
+}
+
+.root::placeholder {
+  color: var(--color-gray-400);
+}
+
+.root:focus {
+  outline: none;
+  border-bottom-color: var(--color-primary);
+  box-shadow: none;
+}

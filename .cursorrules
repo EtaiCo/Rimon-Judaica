@@ -1,0 +1,44 @@
+# Rimon Judaica - Project Guidelines & Cursor Rules
+
+## 1. Project Context & Identity
+- **Project Name:** Rimon Judaica (Premium Boutique e-commerce).
+- **Tech Stack:** Monorepo (Turborepo/Nx), React (Vite), Node.js, Supabase (PostgreSQL), Zod, Framer Motion.
+- **Tone:** Professional, luxury, minimalist, and clean.
+
+## 2. Architecture & Code Structure
+- **Monorepo Awareness:** - Shared types go to `packages/shared-types`.
+    - Backend logic goes to `apps/services/core-service`.
+    - Frontend components go to `apps/storefront`.
+- **Imports:** Always check `@rimon/shared-types` before creating new local interfaces. Use absolute imports where configured.
+- **Component Pattern:** Logic (Hooks/Context) must be separated from UI. Use CSS Modules for styling.
+
+## 3. UI & UX (RTL & Luxury Design)
+- **RTL First:** All components must support Right-to-Left (Hebrew) natively. 
+    - Use Logical Properties: `padding-inline-start` instead of `padding-right`, `inset-inline-start` instead of `right`.
+- **Design System:** Use ONLY defined CSS variables (e.g., `--color-primary`, `--color-accent`). 
+    - Primary Accent: Deep Burgundy.
+    - Base: White/Cream.
+- **Minimalism:** Sharp corners (low border-radius), plenty of whitespace, elegant Serif headings, and clean Sans-Serif body text.
+- **Visual References:** Follow the minimalist aesthetic of high-end boutique studios. Do NOT mention specific external studio names in code or comments.
+
+## 4. Documentation & Language
+- **Coding Language:** All code (variables, functions, filenames) must be in English.
+- **User Interface:** All customer-facing text (Labels, Buttons, Toasts, Placeholders) must be in high-quality Hebrew.
+- **Docstrings:** Every exported function, hook, or component must have a JSDoc block in **English** explaining:
+    - What it does.
+    - Parameters and return values.
+    - Any business logic implications (e.g., "Restores stock upon deletion").
+
+## 5. Security & Data Integrity
+- **Supabase & RLS:** Every new table must include Row Level Security (RLS) policies. Default is `RESTRICT`.
+- **Secrets:** Never hardcode API keys or secrets. Use `.env` variables and verify their existence before use.
+- **Validation:** Use `Zod` for all API request/response validation and form handling.
+- **Stock Integrity:** Logic involving `stock_quantity` must be atomic. Ensure stock is restored to `product_variants` when an item is removed from a cart.
+
+## 6. Interactions & Motion
+- **Transitions:** Use `framer-motion` for smooth, subtle UI transitions (hover effects, scroll-based animations).
+- **Scroll Effects:** Header transitions must be smooth (using `max-width` and `margin: auto` to prevent layout shifts).
+
+## 7. Performance
+- **Images:** Use lazy loading for all product images. 
+- **Icons:** Use thin outline-style icons only.

@@ -1,0 +1,90 @@
+:root {
+  /* ── Brand (deep burgundy system) ── */
+  --color-primary: #5c2330;
+  --color-primary-light: #743040;
+  --color-primary-dark: #451a24;
+  --color-accent: #6b1e2b;
+  --color-background: #ffffff;
+  --color-background-dark: #1a1a1a;
+  --color-cream: #f7f7f5;
+  --color-cream-dark: #eeeeeb;
+
+  /* ── Neutrals ── */
+  --color-white: #ffffff;
+  --color-black: #1a1a1a;
+  --color-gray-100: #f7f7f5;
+  --color-gray-200: #e8e8e4;
+  --color-gray-300: #d4d4d0;
+  --color-gray-400: #a3a3a0;
+  --color-gray-500: #737370;
+  --color-gray-600: #525250;
+  --color-gray-700: #404040;
+  --color-gray-800: #262626;
+
+  /* ── Semantic ── */
+  --color-text-primary: var(--color-black);
+  --color-text-secondary: var(--color-gray-600);
+  --color-text-inverse: var(--color-white);
+  --color-text-accent: var(--color-primary);
+  --color-bg-primary: var(--color-background);
+  --color-bg-secondary: var(--color-white);
+  --color-bg-accent: var(--color-primary);
+  --color-border: #e0e0e0;
+  --color-border-accent: var(--color-primary);
+
+  /* ── Spacing ── */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-section-y: 72px;
+
+  /* ── Typography ── */
+  --font-family-body:
+    "Inter", "Noto Sans Hebrew", "Heebo", "Segoe UI", "Arial Hebrew",
+    "Helvetica Neue", Arial, sans-serif;
+  --font-family-heading:
+    "Cormorant Garamond", "Noto Serif Hebrew", "Frank Ruhl Libre",
+    "David Libre", "Times New Roman", "Arial Hebrew", serif;
+  --letter-spacing-heading: 0.02em;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+
+  /* ── Border radius (sharp / minimal) ── */
+  --radius-sm: 0;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
+  --radius-full: 9999px;
+
+  /* ── Shadows (disabled — use borders) ── */
+  --shadow-subtle: none;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* ── Layout ── */
+  --container-max-width: 1200px;
+  --header-height: 4rem;
+}

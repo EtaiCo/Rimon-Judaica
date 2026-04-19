@@ -1,0 +1,40 @@
+.wrapper {
+  width: 100%;
+  background: var(--color-white);
+  padding-block: var(--space-md) var(--space-section-y);
+}
+
+.bleed {
+  width: 100vw;
+  max-width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  padding-inline: 0;
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--color-gray-100);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  min-height: min(70vh, 640px);
+  max-height: 85vh;
+  object-fit: cover;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  min-height: min(70vh, 640px);
+  max-height: 85vh;
+  background:
+    linear-gradient(
+      135deg,
+      var(--color-gray-100) 0%,
+      var(--color-white) 45%,
+      var(--color-gray-100) 100%
+    );
+}

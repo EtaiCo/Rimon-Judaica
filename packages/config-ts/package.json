@@ -1,0 +1,6 @@
+{
+  "name": "@rimon/config-ts",
+  "version": "0.0.0",
+  "private": true,
+  "files": ["base.json", "react.json", "node.json"]
+}
