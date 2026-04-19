@@ -1,5 +1,5 @@
 /** One line in the cart after joins (API GET /api/cart). */
-export interface CartLine {
+export type CartLine = {
   id: string;
   variantId: string;
   quantity: number;
@@ -14,16 +14,16 @@ export interface CartLine {
   productId: string;
   productName: string;
   productSlug: string;
-}
+};
 
 /** Result shape from Postgres RPC `add_cart_item`. */
-export interface AddCartItemRpcResult {
+export type AddCartItemRpcResult = {
   ok: boolean;
   error?: string;
-}
+};
 
 /** `remove_cart_item` / `decrement_cart_item` RPC responses. */
-export interface CartMutationRpcResult {
+export type CartMutationRpcResult = {
   ok: boolean;
   error?: string;
-}
+};

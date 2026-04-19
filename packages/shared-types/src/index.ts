@@ -3,6 +3,7 @@ export type {
   SubCategory,
   CategoryProduct,
   CategoryProductsResponse,
+  ProductSearchResponse,
   Product,
   ProductVariant,
   ProductWithVariants,

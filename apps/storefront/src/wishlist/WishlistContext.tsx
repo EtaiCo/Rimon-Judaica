@@ -12,7 +12,7 @@ import type { WishlistLine } from "@rimon/shared-types";
 import { useAuth } from "../auth/AuthContext";
 import { apiFetch } from "../lib/api";
 
-export interface WishlistContextValue {
+export type WishlistContextValue = {
   lines: WishlistLine[];
   loading: boolean;
   refreshWishlist: () => Promise<void>;
@@ -23,7 +23,7 @@ export interface WishlistContextValue {
   removeByLineId: (
     lineId: string,
   ) => Promise<{ ok: true } | { ok: false; error: string }>;
-}
+};
 
 const WishlistContext = createContext<WishlistContextValue | null>(null);
 

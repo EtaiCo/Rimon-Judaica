@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@rimon/config-ts": "workspace:*",
-    "@rimon/design-tokens": "workspace:*",
+    "@rimon/design-system": "workspace:*",
     "@rimon/shared-types": "workspace:*",
     "@types/node": "^22",
     "@types/react": "^19.0.0",

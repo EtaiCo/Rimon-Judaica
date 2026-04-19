@@ -1,6 +1,6 @@
 import type { Customer } from "./customer";
 
-export interface AuthSuccessResponse {
+export type AuthSuccessResponse = {
   customer: Customer;
   accessToken: string;
-}
+};

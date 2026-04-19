@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { ChevronDown, ShoppingCart, User } from "lucide-react";
+import { ChevronDown, Search, ShoppingCart, User } from "lucide-react";
 import { useAuth } from "../../auth/AuthContext";
 import { useBootstrap } from "../../context/BootstrapContext";
 import { useCart } from "../../cart/CartContext";
@@ -15,11 +15,12 @@ const ICON_STROKE = 1.35;
 const SCROLL_ENTER_THRESHOLD = 60;
 const SCROLL_EXIT_THRESHOLD = 35;
 
-interface HeaderProps {
+type HeaderProps = {
   onOpenCart?: () => void;
-}
+  onOpenSearch?: () => void;
+};
 
-export function Header({ onOpenCart }: HeaderProps) {
+export function Header({ onOpenCart, onOpenSearch }: HeaderProps) {
   const { customer, clearSession, accessToken } = useAuth();
   const { categories, logoImageUrl, isBootstrapping, hasHydratedData } =
     useBootstrap();
@@ -198,6 +199,15 @@ export function Header({ onOpenCart }: HeaderProps) {
             </Link>
 
             <div className={styles.upperEnd}>
+              <button
+                type="button"
+                className={styles.iconBtn}
+                aria-label="חיפוש"
+                title="חיפוש"
+                onClick={onOpenSearch}
+              >
+                <Search size={22} strokeWidth={ICON_STROKE} aria-hidden />
+              </button>
               <button
                 type="button"
                 className={styles.iconBtn}

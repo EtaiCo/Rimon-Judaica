@@ -7,7 +7,7 @@
 
 ## 2. Architecture & Code Structure
 - **Monorepo Awareness:** - Shared types go to `packages/shared-types`.
-    - Backend logic goes to `apps/core-service`.
+    - Backend logic goes to `apps/services/core-service`.
     - Frontend components go to `apps/storefront`.
 - **Imports:** Always check `@rimon/shared-types` before creating new local interfaces. Use absolute imports where configured.
 - **Component Pattern:** Logic (Hooks/Context) must be separated from UI. Use CSS Modules for styling.

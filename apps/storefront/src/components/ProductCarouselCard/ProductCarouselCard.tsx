@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
 import styles from "./ProductCarouselCard.module.css";
 
-export interface ProductCarouselItem {
+export type ProductCarouselItem = {
   id: string;
   name: string;
   priceLabel: string;
   imageUrl?: string;
   href?: string;
-}
+};
 
 const FALLBACK_IMAGE =
   "https://placehold.co/600x800/FFFFFF/5C2330?text=%3F";
 
-interface ProductCarouselCardProps {
+type ProductCarouselCardProps = {
   product: ProductCarouselItem;
-}
+};
 
 export function ProductCarouselCard({ product }: ProductCarouselCardProps) {
   const src = product.imageUrl?.trim() || FALLBACK_IMAGE;

@@ -21,6 +21,55 @@ importers:
         specifier: ^2.9.5
         version: 2.9.5
 
+  apps/services/core-service:
+    dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2
+        version: 2.101.1
+      bcryptjs:
+        specifier: ^2.4.3
+        version: 2.4.3
+      cors:
+        specifier: ^2.8.5
+        version: 2.8.6
+      dotenv:
+        specifier: ^16
+        version: 16.6.1
+      express:
+        specifier: ^4
+        version: 4.22.1
+      jsonwebtoken:
+        specifier: ^9.0.3
+        version: 9.0.3
+    devDependencies:
+      '@rimon/config-ts':
+        specifier: workspace:*
+        version: link:../../../packages/config-ts
+      '@rimon/shared-types':
+        specifier: workspace:*
+        version: link:../../../packages/shared-types
+      '@types/bcryptjs':
+        specifier: ^2.4.6
+        version: 2.4.6
+      '@types/cors':
+        specifier: ^2
+        version: 2.8.19
+      '@types/express':
+        specifier: ^4
+        version: 4.17.25
+      '@types/jsonwebtoken':
+        specifier: ^9.0.10
+        version: 9.0.10
+      '@types/node':
+        specifier: ^22
+        version: 22.19.17
+      tsx:
+        specifier: ^4
+        version: 4.21.0
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
   apps/storefront:
     dependencies:
       '@supabase/supabase-js':
@@ -51,9 +100,9 @@ importers:
       '@rimon/config-ts':
         specifier: workspace:*
         version: link:../../packages/config-ts
-      '@rimon/design-tokens':
+      '@rimon/design-system':
         specifier: workspace:*
-        version: link:../../packages/design-tokens
+        version: link:../../packages/design-system
       '@rimon/shared-types':
         specifier: workspace:*
         version: link:../../packages/shared-types
@@ -78,62 +127,32 @@ importers:
 
   packages/config-ts: {}
 
-  packages/design-tokens: {}
+  packages/design-system:
+    devDependencies:
+      '@rimon/config-ts':
+        specifier: workspace:*
+        version: link:../config-ts
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.3(@types/react@19.2.14)
+      react:
+        specifier: ^19.0.0
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.4(react@19.2.4)
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
 
   packages/shared-types:
     devDependencies:
       '@rimon/config-ts':
         specifier: workspace:*
         version: link:../config-ts
-      typescript:
-        specifier: ^5.7.0
-        version: 5.9.3
-
-  services/core-service:
-    dependencies:
-      '@supabase/supabase-js':
-        specifier: ^2
-        version: 2.101.1
-      bcryptjs:
-        specifier: ^2.4.3
-        version: 2.4.3
-      cors:
-        specifier: ^2.8.5
-        version: 2.8.6
-      dotenv:
-        specifier: ^16
-        version: 16.6.1
-      express:
-        specifier: ^4
-        version: 4.22.1
-      jsonwebtoken:
-        specifier: ^9.0.3
-        version: 9.0.3
-    devDependencies:
-      '@rimon/config-ts':
-        specifier: workspace:*
-        version: link:../../packages/config-ts
-      '@rimon/shared-types':
-        specifier: workspace:*
-        version: link:../../packages/shared-types
-      '@types/bcryptjs':
-        specifier: ^2.4.6
-        version: 2.4.6
-      '@types/cors':
-        specifier: ^2
-        version: 2.8.19
-      '@types/express':
-        specifier: ^4
-        version: 4.17.25
-      '@types/jsonwebtoken':
-        specifier: ^9.0.10
-        version: 9.0.10
-      '@types/node':
-        specifier: ^22
-        version: 22.19.17
-      tsx:
-        specifier: ^4
-        version: 4.21.0
       typescript:
         specifier: ^5.7.0
         version: 5.9.3

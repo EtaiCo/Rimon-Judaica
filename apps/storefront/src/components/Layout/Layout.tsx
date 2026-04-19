@@ -3,15 +3,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useCart } from "../../cart/CartContext";
 import { CartDrawer } from "../CartDrawer/CartDrawer";
 import { Header } from "../Header/Header";
+import { SearchOverlay } from "../SearchOverlay/SearchOverlay";
 import styles from "./Layout.module.css";
 
-interface LayoutProps {
+type LayoutProps = {
   children: ReactNode;
-}
+};
 
 export function Layout({ children }: LayoutProps) {
   const { addEventSeq, lastAddedVariantId } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [highlightedVariantId, setHighlightedVariantId] = useState<
     string | null
   >(null);
@@ -60,6 +62,8 @@ export function Layout({ children }: LayoutProps) {
     clearAutoClose();
     setCartOpen(true);
   }, [clearAutoClose]);
+  const openSearch = useCallback(() => setSearchOpen(true), []);
+  const closeSearch = useCallback(() => setSearchOpen(false), []);
 
   const closeDrawer = useCallback(() => {
     clearAutoClose();
@@ -69,7 +73,7 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className={styles.wrapper}>
-      <Header onOpenCart={openDrawerManually} />
+      <Header onOpenCart={openDrawerManually} onOpenSearch={openSearch} />
 
       <CartDrawer
         open={cartOpen}
@@ -77,6 +81,7 @@ export function Layout({ children }: LayoutProps) {
         highlightedVariantId={highlightedVariantId}
         onInteract={clearAutoClose}
       />
+      <SearchOverlay open={searchOpen} onClose={closeSearch} />
 
       <main className={styles.main}>{children}</main>
 

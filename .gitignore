@@ -13,6 +13,7 @@ Thumbs.db
 
 npm-debug.log*
 pnpm-debug.log*
+.cursor/debug-*.log
 
 DB.txt
 

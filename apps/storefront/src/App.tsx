@@ -8,6 +8,7 @@ import { CartPage } from "./pages/CartPage";
 import { AccountPage } from "./pages/AccountPage";
 import { OrderDetailPage } from "./pages/OrderDetailPage";
 import { SubCategoryPage } from "./pages/SubCategoryPage";
+import { SearchPage } from "./pages/SearchPage";
 
 export function App() {
   return (
@@ -19,6 +20,7 @@ export function App() {
         element={<SubCategoryPage />}
       />
       <Route path="/product/:id" element={<ProductDetailPage />} />
+      <Route path="/search" element={<SearchPage />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/account" element={<AccountPage />} />
       <Route path="/account/orders/:orderId" element={<OrderDetailPage />} />

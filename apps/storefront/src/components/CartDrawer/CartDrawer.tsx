@@ -8,12 +8,12 @@ import type { CartLine } from "@rimon/shared-types";
 import type { GuestCartLine } from "../../cart/guestCartStorage";
 import styles from "./CartDrawer.module.css";
 
-interface CartDrawerProps {
+type CartDrawerProps = {
   open: boolean;
   onClose: () => void;
   highlightedVariantId?: string | null;
   onInteract?: () => void;
-}
+};
 
 function guestToDisplay(g: GuestCartLine) {
   return {

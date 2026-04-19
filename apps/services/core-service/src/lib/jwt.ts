@@ -12,7 +12,7 @@ function getSecret(): string {
       },
       body: JSON.stringify({
         sessionId: "7d53ed",
-        location: "services/core-service/src/lib/jwt.ts:getSecret",
+        location: "apps/services/core-service/src/lib/jwt.ts:getSecret",
         message: "JWT_SECRET missing at use time",
         data: {
           jwtRawLength: process.env.JWT_SECRET?.length ?? 0,
@@ -25,7 +25,7 @@ function getSecret(): string {
     }).catch(() => {});
     // #endregion
     throw new Error(
-      "Missing JWT_SECRET. Add it to services/core-service/.env (see .env.template).",
+      "Missing JWT_SECRET. Add it to apps/services/core-service/.env (see .env.template).",
     );
   }
   return s;

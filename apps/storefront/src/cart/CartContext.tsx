@@ -27,7 +27,7 @@ import {
 const OUT_OF_STOCK_API = "מצטערים, המלאי אזל";
 const SYNC_OOS_TOAST = "מצטערים, אחד הפריטים שהוספת כבר אינו זמין";
 
-export interface CartContextValue {
+export type CartContextValue = {
   isGuest: boolean;
   guestItems: GuestCartLine[];
   serverItems: CartLine[];
@@ -52,7 +52,7 @@ export interface CartContextValue {
   removeLine: (
     lineId: string,
   ) => Promise<{ ok: true } | { ok: false; error: string }>;
-}
+};
 
 const CartContext = createContext<CartContextValue | null>(null);
 

@@ -1,5 +1,6 @@
 import { useState, type SubmitEvent } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Button, Input } from "@rimon/design-system";
 import { Layout } from "../components/Layout/Layout";
 import { useAuth } from "../auth/AuthContext";
 import shared from "./authShared.module.css";
@@ -90,9 +91,8 @@ export function LoginPage() {
               <label className={shared.label} htmlFor="login-email">
                 אימייל
               </label>
-              <input
+              <Input
                 id="login-email"
-                className={shared.input}
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -107,9 +107,8 @@ export function LoginPage() {
               <label className={shared.label} htmlFor="login-password">
                 סיסמה
               </label>
-              <input
+              <Input
                 id="login-password"
-                className={shared.input}
                 type="password"
                 name="password"
                 autoComplete="current-password"
@@ -119,13 +118,9 @@ export function LoginPage() {
                 disabled={loading || success}
               />
             </div>
-            <button
-              type="submit"
-              className={shared.buttonPrimary}
-              disabled={loading || success}
-            >
+            <Button type="submit" disabled={loading || success}>
               {loading ? "מתחברים…" : "התחברות"}
-            </button>
+            </Button>
           </form>
           <div className={shared.footerLinks}>
             <Link className={shared.link} to="/register">

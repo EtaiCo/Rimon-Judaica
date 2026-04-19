@@ -10,13 +10,13 @@ import type { BootstrapPayload, Category } from "@rimon/shared-types";
 
 const CACHE_KEY = "rimon.bootstrap.v1";
 
-interface BootstrapContextValue {
+type BootstrapContextValue = {
   logoImageUrl?: string;
   heroImageUrl?: string;
   categories: Category[];
   isBootstrapping: boolean;
   hasHydratedData: boolean;
-}
+};
 
 const BootstrapContext = createContext<BootstrapContextValue | null>(null);
 

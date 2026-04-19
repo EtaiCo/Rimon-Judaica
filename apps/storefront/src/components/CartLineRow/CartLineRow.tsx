@@ -7,7 +7,7 @@ import styles from "./CartLineRow.module.css";
 const FALLBACK_IMAGE =
   "https://placehold.co/120x160/FFFFFF/5C2330?text=%3F";
 
-export interface CartLineRowDisplay {
+export type CartLineRowDisplay = {
   id: string;
   productId: string;
   productName: string;
@@ -15,9 +15,9 @@ export interface CartLineRowDisplay {
   price: number;
   quantity: number;
   imageUrl?: string;
-}
+};
 
-interface CartLineRowProps {
+type CartLineRowProps = {
   line: CartLineRowDisplay;
   shelfStock?: number;
   expiresAt?: string;
@@ -27,7 +27,7 @@ interface CartLineRowProps {
   onIncrement: () => void;
   onDecrement: () => void;
   onRemove: () => void;
-}
+};
 
 function formatExpiryHe(iso: string): string {
   try {
