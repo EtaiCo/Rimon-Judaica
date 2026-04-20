@@ -1,32 +1,23 @@
 /**
  * API base URL.
  *
- * In production (Vercel) this should be set to the Render backend, e.g.
+ * Set `VITE_API_BASE_URL` in production (Vercel) to the Render backend, e.g.
  * `https://rimon-judaica.onrender.com`. In local dev leave it unset so requests
  * stay same-origin and get forwarded to `localhost:4000` by the Vite proxy
  * configured in `apps/storefront/vite.config.ts`.
  */
 const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? "").replace(/\/$/, "");
 
-if (import.meta.env.PROD) {
-  // Temporary: confirm the build-time VITE_API_BASE_URL actually made it into the bundle.
-  // Remove once production routing is confirmed working.
-  console.info(
-    "[api] Base URL:",
-    API_BASE || "(empty - env var missing at build time)",
-  );
-}
-
 /** Prepend the configured API base URL to a relative path. */
 export function apiUrl(path: string): string {
   if (/^https?:\/\//i.test(path)) return path;
-  return `${API_BASE}${path.startsWith("/") ? "" : "/"}${path}`;
+  const suffix = path.startsWith("/") ? path : `/${path}`;
+  return `${API_BASE}${suffix}`;
 }
 
 /**
- * Core API fetcher.
- * Automatically routes requests to the configured API base (Render backend in
- * production, empty in dev so the Vite proxy kicks in).
+ * Authenticated JSON fetcher. Routes through `apiUrl` so dev uses the Vite
+ * proxy and production uses `VITE_API_BASE_URL`.
  */
 export async function apiFetch(
   path: string,
