@@ -5,6 +5,8 @@
  * invalidates stale entries without migration logic.
  */
 
+import { apiUrl } from "./api";
+
 // ---------------------------------------------------------------------------
 // Low-level helpers
 // ---------------------------------------------------------------------------
@@ -106,7 +108,9 @@ export async function prefetchCategoryProducts(
   await deduped(key, async () => {
     try {
       const res = await fetch(
-        `/api/categories/${encodeURIComponent(categorySlug)}/${encodeURIComponent(subSlug)}/products`,
+        apiUrl(
+          `/api/categories/${encodeURIComponent(categorySlug)}/${encodeURIComponent(subSlug)}/products`,
+        ),
       );
       if (!res.ok) return null;
       const data = await res.json();

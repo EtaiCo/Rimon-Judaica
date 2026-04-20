@@ -4,6 +4,7 @@ import type { ProductVariant, ProductWithVariants } from "@rimon/shared-types";
 import { Layout } from "../components/Layout/Layout";
 import { formatIls } from "../lib/formatIls";
 import { PRODUCT_IMAGE_FALLBACK } from "../lib/productImageFallback";
+import { apiUrl } from "../lib/api";
 import styles from "./ProductPage.module.css";
 
 function variantImage(v: ProductVariant): string {
@@ -29,7 +30,7 @@ export function ProductPage() {
     setLoading(true);
     setError(null);
 
-    fetch(`/api/products/${encodeURIComponent(id)}`)
+    fetch(apiUrl(`/api/products/${encodeURIComponent(id)}`))
       .then(async (res) => {
         if (!res.ok) {
           const body = await res.json().catch(() => ({}));

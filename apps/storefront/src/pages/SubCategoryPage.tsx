@@ -4,6 +4,7 @@ import type { CategoryProductsResponse } from "@rimon/shared-types";
 import { Layout } from "../components/Layout/Layout";
 import { ProductCard } from "../components/ProductCard/ProductCard";
 import { CACHE_KEYS } from "../lib/cacheService";
+import { apiUrl } from "../lib/api";
 import { useStaleWhileRevalidate } from "../hooks/useStaleWhileRevalidate";
 import styles from "./SubCategoryPage.module.css";
 
@@ -21,7 +22,9 @@ export function SubCategoryPage() {
   const fetcher = useCallback(async (): Promise<CategoryProductsResponse | null> => {
     if (!categorySlug || !subCategorySlug) return null;
     const res = await fetch(
-      `/api/categories/${encodeURIComponent(categorySlug)}/${encodeURIComponent(subCategorySlug)}/products`,
+      apiUrl(
+        `/api/categories/${encodeURIComponent(categorySlug)}/${encodeURIComponent(subCategorySlug)}/products`,
+      ),
     );
     if (res.status === 404) return null;
     if (!res.ok) return null;

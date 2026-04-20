@@ -7,6 +7,7 @@ import { useAuth } from "../auth/AuthContext";
 import { useCart } from "../cart/CartContext";
 import { formatPriceIls } from "../lib/formatPrice";
 import { CACHE_KEYS } from "../lib/cacheService";
+import { apiUrl } from "../lib/api";
 import { useStaleWhileRevalidate } from "../hooks/useStaleWhileRevalidate";
 import styles from "./ProductDetailPage.module.css";
 
@@ -22,7 +23,7 @@ export function ProductDetailPage() {
   const cacheKey = id ? CACHE_KEYS.product(id) : null;
   const fetcher = useCallback(async (): Promise<ProductWithVariants | null> => {
     if (!id) return null;
-    const res = await fetch(`/api/products/${encodeURIComponent(id)}`);
+    const res = await fetch(apiUrl(`/api/products/${encodeURIComponent(id)}`));
     if (!res.ok) return null;
     return (await res.json()) as ProductWithVariants;
   }, [id]);

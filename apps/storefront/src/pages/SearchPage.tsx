@@ -4,6 +4,7 @@ import type { ProductSearchResponse } from "@rimon/shared-types";
 import { Layout } from "../components/Layout/Layout";
 import { ProductCard } from "../components/ProductCard/ProductCard";
 import { useBootstrap } from "../context/BootstrapContext";
+import { apiUrl } from "../lib/api";
 import styles from "./SearchPage.module.css";
 
 export function SearchPage() {
@@ -38,7 +39,7 @@ export function SearchPage() {
     let cancelled = false;
     setLoading(true);
 
-    fetch(`/api/products/search?q=${encodeURIComponent(q)}&limit=24`)
+    fetch(apiUrl(`/api/products/search?q=${encodeURIComponent(q)}&limit=24`))
       .then(async (res) => {
         if (!res.ok) return null;
         return (await res.json()) as ProductSearchResponse;

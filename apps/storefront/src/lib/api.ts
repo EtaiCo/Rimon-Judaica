@@ -1,4 +1,24 @@
-/** Relative `/api/*` calls work with the Vite dev proxy; production needs same-origin or a configured base URL. */
+/**
+ * API base URL.
+ *
+ * In production (Vercel) this should be set to the Render backend, e.g.
+ * `https://rimon-judaica.onrender.com`. In local dev leave it unset so requests
+ * stay same-origin and get forwarded to `localhost:4000` by the Vite proxy
+ * configured in `apps/storefront/vite.config.ts`.
+ */
+const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? "").replace(/\/$/, "");
+
+/** Prepend the configured API base URL to a relative path. */
+export function apiUrl(path: string): string {
+  if (/^https?:\/\//i.test(path)) return path;
+  return `${API_BASE}${path.startsWith("/") ? "" : "/"}${path}`;
+}
+
+/**
+ * Core API fetcher.
+ * Automatically routes requests to the configured API base (Render backend in
+ * production, empty in dev so the Vite proxy kicks in).
+ */
 export async function apiFetch(
   path: string,
   options: {
@@ -14,10 +34,10 @@ export async function apiFetch(
   if (options.accessToken) {
     headers.set("Authorization", `Bearer ${options.accessToken}`);
   }
-  return fetch(path, {
+
+  return fetch(apiUrl(path), {
     method: options.method ?? "GET",
     headers,
-    body:
-      options.body !== undefined ? JSON.stringify(options.body) : undefined,
+    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
   });
 }

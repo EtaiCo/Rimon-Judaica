@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Button, Input } from "@rimon/design-system";
 import { Layout } from "../components/Layout/Layout";
 import { useAuth } from "../auth/AuthContext";
+import { apiUrl } from "../lib/api";
 import shared from "./authShared.module.css";
 import "./LoginPage.module.css";
 
@@ -24,7 +25,7 @@ export function LoginPage() {
     setError(null);
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(apiUrl("/api/auth/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim(), password }),

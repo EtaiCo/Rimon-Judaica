@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import type { BootstrapPayload, Category } from "@rimon/shared-types";
+import { apiUrl } from "../lib/api";
 
 const CACHE_KEY = "rimon.bootstrap.v1";
 
@@ -72,7 +73,7 @@ export function BootstrapProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
 
-    fetch("/api/site-settings/bootstrap")
+    fetch(apiUrl("/api/site-settings/bootstrap"))
       .then(async (res) => {
         if (!res.ok) return null;
         return normalizePayload((await res.json()) as Partial<BootstrapPayload>);

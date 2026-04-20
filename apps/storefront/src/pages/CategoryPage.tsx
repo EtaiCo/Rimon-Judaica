@@ -4,6 +4,7 @@ import type { CategoryProductsResponse } from "@rimon/shared-types";
 import { Layout } from "../components/Layout/Layout";
 import { useBootstrap } from "../context/BootstrapContext";
 import { CACHE_KEYS, readJson } from "../lib/cacheService";
+import { apiUrl } from "../lib/api";
 import styles from "./CategoryPage.module.css";
 
 const THUMB_PLACEHOLDER =
@@ -50,7 +51,9 @@ export function CategoryPage() {
       toFetch.map(async (sub) => {
         try {
           const res = await fetch(
-            `/api/categories/${encodeURIComponent(parentCategory.slug)}/${encodeURIComponent(sub.slug)}/products`,
+            apiUrl(
+              `/api/categories/${encodeURIComponent(parentCategory.slug)}/${encodeURIComponent(sub.slug)}/products`,
+            ),
           );
           if (!res.ok) return [sub.slug, ""] as const;
           const data = (await res.json()) as {

@@ -4,6 +4,7 @@ import { Button, Input } from "@rimon/design-system";
 import type { CustomerType } from "@rimon/shared-types";
 import { Layout } from "../components/Layout/Layout";
 import { useAuth } from "../auth/AuthContext";
+import { apiUrl } from "../lib/api";
 import shared from "./authShared.module.css";
 import regStyles from "./RegisterPage.module.css";
 
@@ -83,7 +84,7 @@ export function RegisterPage() {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch(apiUrl("/api/auth/register"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

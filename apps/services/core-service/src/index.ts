@@ -5,10 +5,32 @@ import apiRouter from "./api/index.js";
 
 const app = express();
 
-app.use(cors({
-  origin: [config.storefrontUrl, 'https://rimon-judaica-shop.vercel.app', 'http://localhost:5173'],
-  credentials: true
-}));app.use(express.json());
+/**
+ * CORS allowlist: storefront origin from config (STOREFRONT_URL in prod)
+ * plus local dev URLs. Requests without an Origin header (curl, health checks,
+ * server-to-server) are allowed so Render health probes don't fail.
+ */
+const allowedOrigins = Array.from(
+  new Set(
+    [config.storefrontUrl, "http://localhost:5173", "http://127.0.0.1:5173"]
+      .map((u) => u?.trim())
+      .filter((u): u is string => Boolean(u)),
+  ),
+);
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+      callback(new Error(`Origin ${origin} not allowed by CORS`));
+    },
+    credentials: true,
+  }),
+);
+app.use(express.json());
 
 app.get("/", (_req, res) => {
   res.status(200).json({

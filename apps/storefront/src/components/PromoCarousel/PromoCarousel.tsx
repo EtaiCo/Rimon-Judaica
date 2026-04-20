@@ -9,6 +9,7 @@ import { PRODUCT_CAROUSEL_PLACEHOLDERS } from "../../data/productCarouselPlaceho
 import { ProductCard } from "../ProductCard/ProductCard";
 import { ProductCarouselCard } from "../ProductCarouselCard/ProductCarouselCard";
 import { CACHE_KEYS } from "../../lib/cacheService";
+import { apiUrl } from "../../lib/api";
 import { useStaleWhileRevalidate } from "../../hooks/useStaleWhileRevalidate";
 import styles from "./PromoCarousel.module.css";
 
@@ -18,7 +19,7 @@ const SLICE = 12;
 const CACHE_KEY = CACHE_KEYS.featuredProducts();
 
 function fetchFeatured(): Promise<ProductWithVariants[] | null> {
-  return fetch("/api/products")
+  return fetch(apiUrl("/api/products"))
     .then(async (res) => {
       if (!res.ok) return [];
       const data = (await res.json()) as unknown;

@@ -8,6 +8,7 @@ import { useDebouncedValue } from "../../hooks/useDebouncedValue";
 import { formatPriceIls } from "../../lib/formatPrice";
 import { pickDisplayVariant } from "../../lib/productDisplay";
 import { PRODUCT_IMAGE_FALLBACK } from "../../lib/productImageFallback";
+import { apiUrl } from "../../lib/api";
 import styles from "./SearchOverlay.module.css";
 
 type SearchOverlayProps = {
@@ -64,7 +65,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
     setLoading(true);
 
     fetch(
-      `/api/products/search?q=${encodeURIComponent(debouncedQuery)}&limit=8`,
+      apiUrl(`/api/products/search?q=${encodeURIComponent(debouncedQuery)}&limit=8`),
     )
       .then(async (res) => {
         if (!res.ok) return null;
