@@ -5,8 +5,10 @@ import apiRouter from "./api/index.js";
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: [config.storefrontUrl, 'https://rimon-judaica-shop.vercel.app', 'http://localhost:5173'],
+  credentials: true
+}));app.use(express.json());
 
 app.get("/", (_req, res) => {
   res.status(200).json({
