@@ -8,6 +8,15 @@
  */
 const API_BASE = (import.meta.env.VITE_API_BASE_URL ?? "").replace(/\/$/, "");
 
+if (import.meta.env.PROD) {
+  // Temporary: confirm the build-time VITE_API_BASE_URL actually made it into the bundle.
+  // Remove once production routing is confirmed working.
+  console.info(
+    "[api] Base URL:",
+    API_BASE || "(empty - env var missing at build time)",
+  );
+}
+
 /** Prepend the configured API base URL to a relative path. */
 export function apiUrl(path: string): string {
   if (/^https?:\/\//i.test(path)) return path;
