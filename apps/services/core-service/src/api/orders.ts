@@ -4,8 +4,26 @@ import type {
   OrderDetailLine,
   OrderShippingAddress,
   OrderShippingMethod,
+  OrderStatus,
   OrderSummary,
 } from "@rimon/shared-types";
+
+const ORDER_STATUSES = new Set<OrderStatus>([
+  "pending",
+  "paid",
+  "preparing",
+  "shipped",
+  "delivered",
+  "cancelled",
+  "refunded",
+]);
+
+function parseOrderStatus(raw: unknown): OrderStatus {
+  const s = String(raw);
+  return ORDER_STATUSES.has(s as OrderStatus)
+    ? (s as OrderStatus)
+    : "pending";
+}
 import { getSupabaseAdmin } from "../config/supabase.js";
 import { requireCustomerAuth } from "../middleware/auth.js";
 
@@ -61,7 +79,7 @@ router.get("/", requireCustomerAuth, async (req, res) => {
     return;
   }
 
-  const customerId = req.customerId!;
+  const customerId = req.customer!.id;
 
   const { data: orderRows, error } = await supabaseAdmin
     .from("orders")
@@ -82,7 +100,7 @@ router.get("/", requireCustomerAuth, async (req, res) => {
       id: row.id as string,
       invoiceNumber: row.invoice_number as string,
       createdAt: row.created_at as string,
-      status: String(row.status),
+      status: parseOrderStatus(row.status),
       totalAmount: Number(row.total_amount),
       shippingMethod: sm ?? "home_delivery",
     };
@@ -107,7 +125,7 @@ router.get("/:id", requireCustomerAuth, async (req, res) => {
     return;
   }
 
-  const customerId = req.customerId!;
+  const customerId = req.customer!.id;
 
   const { data: orderRow, error: orderErr } = await supabaseAdmin
     .from("orders")
@@ -220,7 +238,7 @@ router.get("/:id", requireCustomerAuth, async (req, res) => {
     id: orderRow.id as string,
     invoiceNumber: orderRow.invoice_number as string,
     createdAt: orderRow.created_at as string,
-    status: String(orderRow.status),
+    status: parseOrderStatus(orderRow.status),
     totalAmount: Number(orderRow.total_amount),
     shippingMethod: sm ?? "home_delivery",
     shippingAddress: parseShippingAddress(orderRow.shipping_address),

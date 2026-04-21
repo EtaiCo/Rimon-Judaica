@@ -3,6 +3,15 @@ export type OrderShippingMethod =
   | "self_pickup"
   | "pickup_point";
 
+export type OrderStatus =
+  | "pending"
+  | "paid"
+  | "preparing"
+  | "shipped"
+  | "delivered"
+  | "cancelled"
+  | "refunded";
+
 /** Shipped in `shipping_address` JSONB for home_delivery / pickup_point. */
 export type OrderShippingAddress = {
   street?: string;
@@ -20,9 +29,12 @@ export type OrderSummary = {
   id: string;
   invoiceNumber: string;
   createdAt: string;
-  status: string;
+  status: OrderStatus;
   totalAmount: number;
   shippingMethod: OrderShippingMethod;
+  trackingNumber?: string;
+  refundedAt?: string;
+  refundAmount?: number;
 };
 
 /** One line on an order (detail response). */
@@ -45,9 +57,15 @@ export type OrderDetail = {
   id: string;
   invoiceNumber: string;
   createdAt: string;
-  status: string;
+  status: OrderStatus;
   totalAmount: number;
   shippingMethod: OrderShippingMethod;
   shippingAddress: OrderShippingAddress | null;
   items: OrderDetailLine[];
+  trackingNumber?: string;
+  shippedAt?: string;
+  deliveredAt?: string;
+  refundedAt?: string;
+  refundAmount?: number;
+  notes?: string;
 };

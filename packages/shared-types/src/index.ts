@@ -8,7 +8,12 @@ export type {
   ProductVariant,
   ProductWithVariants,
 } from "./product";
-export type { Customer, CustomerType } from "./customer";
+export type {
+  Customer,
+  CustomerType,
+  CustomerRole,
+  CustomerStatus,
+} from "./customer";
 export type { AuthSuccessResponse } from "./auth";
 export type {
   CartLine,
@@ -22,6 +27,21 @@ export type {
   OrderDetailLine,
   OrderShippingAddress,
   OrderShippingMethod,
+  OrderStatus,
   OrderSummary,
 } from "./orders";
 export type { SiteImageSetting, BootstrapPayload } from "./bootstrap";
+export type {
+  AdminActivityEntry,
+  AdminMeResponse,
+  AdminOrderListResponse,
+  AdminOrderSummary,
+  AdminUserDetail,
+  AdminUserSummary,
+  AuditDiff,
+  BestSellerEntry,
+  CustomerInsights,
+  LowStockAlert,
+  SalesOverview,
+  SecurityEvent,
+} from "./admin";

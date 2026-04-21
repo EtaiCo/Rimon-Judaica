@@ -47,8 +47,8 @@
     "Inter", "Noto Sans Hebrew", "Heebo", "Segoe UI", "Arial Hebrew",
     "Helvetica Neue", Arial, sans-serif;
   --font-family-heading:
-    "Cormorant Garamond", "Noto Serif Hebrew", "Frank Ruhl Libre",
-    "David Libre", "Times New Roman", "Arial Hebrew", serif;
+    "Inter", Frank Ruhl Libre",
+    "Times New Roman", "Arial Hebrew", serif;
   --letter-spacing-heading: 0.02em;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;

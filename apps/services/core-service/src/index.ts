@@ -1,14 +1,33 @@
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
 import { config } from "./config/index.js";
 import apiRouter from "./api/index.js";
+import { requestId } from "./middleware/requestId.js";
+import { requireJsonContentType } from "./middleware/contentType.js";
+import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 
+/** Trust the first proxy hop (Render, Cloudflare) so req.ip is the real client IP. */
+app.set("trust proxy", 1);
+app.disable("x-powered-by");
+
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    contentSecurityPolicy: false,
+  }),
+);
+
+app.use(requestId);
+
 /**
  * CORS allowlist: storefront origin from config (STOREFRONT_URL in prod)
- * plus local dev URLs. Requests without an Origin header (curl, health checks,
- * server-to-server) are allowed so Render health probes don't fail.
+ * plus local dev URLs. Requests without an Origin header (curl, health
+ * checks, server-to-server) are allowed so Render health probes don't
+ * fail. We use Bearer auth, so `credentials` is intentionally false to
+ * shrink the cross-origin attack surface.
  */
 const allowedOrigins = Array.from(
   new Set(
@@ -27,10 +46,20 @@ app.use(
       }
       callback(new Error(`Origin ${origin} not allowed by CORS`));
     },
-    credentials: true,
+    credentials: false,
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Idempotency-Key",
+      "X-Sudo-Password",
+      "X-Request-Id",
+    ],
+    exposedHeaders: ["X-Request-Id"],
   }),
 );
-app.use(express.json());
+
+app.use(requireJsonContentType);
+app.use(express.json({ limit: "256kb" }));
 
 app.get("/", (_req, res) => {
   res.status(200).json({
@@ -42,6 +71,9 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/api", apiRouter);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 app.listen(config.port, () => {
   console.log(`[core-service] Running on http://localhost:${config.port}`);

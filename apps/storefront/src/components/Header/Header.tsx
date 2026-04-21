@@ -21,7 +21,7 @@ type HeaderProps = {
 };
 
 export function Header({ onOpenCart, onOpenSearch }: HeaderProps) {
-  const { customer, clearSession, accessToken } = useAuth();
+  const { customer, clearSession, accessToken, isAdmin } = useAuth();
   const { categories, logoImageUrl, isBootstrapping, hasHydratedData } =
     useBootstrap();
   const { itemCount } = useCart();
@@ -159,6 +159,11 @@ export function Header({ onOpenCart, onOpenSearch }: HeaderProps) {
               {customer ? (
                 <div className={styles.authCluster}>
                   <span className={styles.greeting}>שלום {displayName}</span>
+                  {isAdmin ? (
+                    <Link to="/admin" className={styles.upperLink}>
+                      ניהול
+                    </Link>
+                  ) : null}
                   <button
                     type="button"
                     className={`${styles.upperLink} ${styles.logoutBtn}`}

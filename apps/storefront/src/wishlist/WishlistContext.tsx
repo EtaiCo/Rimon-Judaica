@@ -28,25 +28,35 @@ export type WishlistContextValue = {
 const WishlistContext = createContext<WishlistContextValue | null>(null);
 
 export function WishlistProvider({ children }: { children: ReactNode }) {
-  const { accessToken, isReady } = useAuth();
+  const { accessToken, isReady, clearSession } = useAuth();
   const [lines, setLines] = useState<WishlistLine[]>([]);
   const [loading, setLoading] = useState(false);
   const prevTokenRef = useRef<string | null | undefined>(undefined);
 
-  const load = useCallback(async (token: string) => {
-    setLoading(true);
-    try {
-      const res = await apiFetch("/api/wishlist", { accessToken: token });
-      if (!res.ok) {
-        setLines([]);
-        return;
+  const load = useCallback(
+    async (token: string) => {
+      setLoading(true);
+      try {
+        const res = await apiFetch("/api/wishlist", { accessToken: token });
+        if (res.status === 401) {
+          // Token expired / jwt_version bumped / account suspended. Drop
+          // the dead session so we stop re-firing with it on every render.
+          clearSession();
+          setLines([]);
+          return;
+        }
+        if (!res.ok) {
+          setLines([]);
+          return;
+        }
+        const data = (await res.json()) as unknown;
+        setLines(Array.isArray(data) ? (data as WishlistLine[]) : []);
+      } finally {
+        setLoading(false);
       }
-      const data = (await res.json()) as unknown;
-      setLines(Array.isArray(data) ? (data as WishlistLine[]) : []);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    },
+    [clearSession],
+  );
 
   useEffect(() => {
     if (!isReady) return;

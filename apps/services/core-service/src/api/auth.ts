@@ -1,13 +1,19 @@
 import { Router, type Router as RouterType } from "express";
-import type { Customer, CustomerType } from "@rimon/shared-types";
+import type {
+  Customer,
+  CustomerRole,
+  CustomerStatus,
+  CustomerType,
+} from "@rimon/shared-types";
 import { getSupabaseAdmin } from "../config/supabase.js";
 import { signCustomerAccessToken } from "../lib/jwt.js";
 import { hashPassword, verifyPassword } from "../lib/password.js";
+import { requireCustomerAuth, authLimiter } from "../middleware/index.js";
+import { logAuthEvent, logSecurityEvent } from "../lib/securityLog.js";
 
 const router: RouterType = Router();
 
-const EMAIL_REGEX =
-  /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 const PHONE_DIGITS_REGEX = /^[0-9]{9,10}$/;
 
 const PASSWORD_POLICY_HE =
@@ -29,7 +35,15 @@ function isCustomerType(v: unknown): v is CustomerType {
   return v === "private" || v === "wholesale";
 }
 
-router.post("/register", async (req, res) => {
+function isCustomerRole(v: unknown): v is CustomerRole {
+  return v === "customer" || v === "admin";
+}
+
+function isCustomerStatus(v: unknown): v is CustomerStatus {
+  return v === "active" || v === "suspended";
+}
+
+router.post("/register", authLimiter, async (req, res) => {
   let supabaseAdmin;
   try {
     supabaseAdmin = getSupabaseAdmin();
@@ -91,7 +105,7 @@ router.post("/register", async (req, res) => {
       password_hash,
     })
     .select(
-      "id, full_name, email, phone, customer_type, created_at, last_login",
+      "id, full_name, email, phone, customer_type, role, status, jwt_version, created_at, last_login",
     )
     .single();
 
@@ -108,29 +122,47 @@ router.post("/register", async (req, res) => {
     return;
   }
 
+  const role: CustomerRole = isCustomerRole(data.role) ? data.role : "customer";
+  const status: CustomerStatus = isCustomerStatus(data.status)
+    ? data.status
+    : "active";
+
   const customer: Customer = {
     id: data.id,
     full_name: data.full_name ?? "",
     email: data.email,
     phone: data.phone,
     customer_type: data.customer_type as CustomerType,
+    role,
+    status,
     created_at: data.created_at,
     last_login: data.last_login ?? undefined,
   };
 
   let accessToken: string;
   try {
-    accessToken = signCustomerAccessToken(customer.id, customer.email);
+    const signed = signCustomerAccessToken(
+      customer.id,
+      Number(data.jwt_version) || 1,
+      { isAdmin: role === "admin" },
+    );
+    accessToken = signed.token;
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     res.status(503).json({ error: msg });
     return;
   }
 
+  await logAuthEvent(req, {
+    kind: "register",
+    customerId: customer.id,
+    email: customer.email,
+  });
+
   res.status(201).json({ customer, accessToken });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", authLimiter, async (req, res) => {
   let supabaseAdmin;
   try {
     supabaseAdmin = getSupabaseAdmin();
@@ -159,7 +191,7 @@ router.post("/login", async (req, res) => {
   const { data: row, error: fetchErr } = await supabaseAdmin
     .from("customers")
     .select(
-      "id, full_name, email, phone, customer_type, created_at, last_login, password_hash",
+      "id, full_name, email, phone, customer_type, role, status, jwt_version, created_at, last_login, password_hash",
     )
     .eq("email", email)
     .maybeSingle();
@@ -170,13 +202,34 @@ router.post("/login", async (req, res) => {
   }
 
   if (!row) {
+    await logAuthEvent(req, { kind: "login_fail", email });
     res.status(401).json({ error: "אימייל או סיסמה שגויים." });
     return;
   }
 
   const ok = await verifyPassword(password, row.password_hash as string);
   if (!ok) {
+    await logAuthEvent(req, {
+      kind: "login_fail",
+      email,
+      customerId: row.id as string,
+    });
     res.status(401).json({ error: "אימייל או סיסמה שגויים." });
+    return;
+  }
+
+  const status: CustomerStatus = isCustomerStatus(row.status)
+    ? row.status
+    : "active";
+
+  if (status !== "active") {
+    await logSecurityEvent(req, {
+      kind: "login_blocked_suspended",
+      severity: "warn",
+      customerId: row.id as string,
+      meta: { email },
+    });
+    res.status(403).json({ error: "החשבון מושעה. פנו לתמיכה." });
     return;
   }
 
@@ -186,7 +239,7 @@ router.post("/login", async (req, res) => {
     .update({ last_login: nowIso })
     .eq("id", row.id)
     .select(
-      "id, full_name, email, phone, customer_type, created_at, last_login",
+      "id, full_name, email, phone, customer_type, role, status, jwt_version, created_at, last_login",
     )
     .single();
 
@@ -195,26 +248,121 @@ router.post("/login", async (req, res) => {
     return;
   }
 
+  const role: CustomerRole = isCustomerRole(updated.role) ? updated.role : "customer";
+
   const customer: Customer = {
     id: updated.id,
     full_name: updated.full_name ?? "",
     email: updated.email,
     phone: updated.phone,
     customer_type: updated.customer_type as CustomerType,
+    role,
+    status,
     created_at: updated.created_at,
     last_login: updated.last_login ?? undefined,
   };
 
   let accessToken: string;
   try {
-    accessToken = signCustomerAccessToken(customer.id, customer.email);
+    const signed = signCustomerAccessToken(
+      customer.id,
+      Number(updated.jwt_version) || 1,
+      { isAdmin: role === "admin" },
+    );
+    accessToken = signed.token;
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     res.status(503).json({ error: msg });
     return;
   }
 
+  await logAuthEvent(req, {
+    kind: "login_ok",
+    customerId: customer.id,
+    email: customer.email,
+  });
+
   res.json({ customer, accessToken });
+});
+
+/** Returns the live customer row. Used by the frontend after load/refresh. */
+router.get("/me", requireCustomerAuth, async (req, res) => {
+  let supabase;
+  try {
+    supabase = getSupabaseAdmin();
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    res.status(503).json({ error: msg });
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("customers")
+    .select(
+      "id, full_name, email, phone, customer_type, role, status, created_at, last_login",
+    )
+    .eq("id", req.customer!.id)
+    .maybeSingle();
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+  if (!data) {
+    res.status(404).json({ error: "לא נמצא." });
+    return;
+  }
+
+  const role: CustomerRole = isCustomerRole(data.role) ? data.role : "customer";
+  const status: CustomerStatus = isCustomerStatus(data.status)
+    ? data.status
+    : "active";
+
+  const customer: Customer = {
+    id: data.id,
+    full_name: data.full_name ?? "",
+    email: data.email,
+    phone: data.phone,
+    customer_type: data.customer_type as CustomerType,
+    role,
+    status,
+    created_at: data.created_at,
+    last_login: data.last_login ?? undefined,
+  };
+  res.json({ customer });
+});
+
+/**
+ * Logout endpoint. Bumps `jwt_version` so every outstanding token for
+ * this customer is invalidated immediately. This is the only way to
+ * force-revoke sessions (including a stolen token).
+ */
+router.post("/logout", requireCustomerAuth, async (req, res) => {
+  let supabase;
+  try {
+    supabase = getSupabaseAdmin();
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    res.status(503).json({ error: msg });
+    return;
+  }
+
+  const { error } = await supabase.rpc("revoke_user_sessions", {
+    p_user_id: req.customer!.id,
+  });
+
+  if (error) {
+    res.status(500).json({ error: error.message });
+    return;
+  }
+
+  await logAuthEvent(req, {
+    kind: "logout",
+    customerId: req.customer!.id,
+    email: req.customer!.email,
+  });
+
+  res.status(204).end();
 });
 
 export default router;

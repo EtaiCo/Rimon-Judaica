@@ -57,7 +57,7 @@ export type CartContextValue = {
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const { accessToken, customer, isReady } = useAuth();
+  const { accessToken, customer, isReady, clearSession } = useAuth();
   const [guestItems, setGuestItems] = useState<GuestCartLine[]>([]);
   const [serverItems, setServerItems] = useState<CartLine[]>([]);
   const [loading, setLoading] = useState(false);
@@ -80,6 +80,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (!hasSnapshot) setLoading(true);
     try {
       const res = await apiFetch("/api/cart", { accessToken: token });
+      if (res.status === 401) {
+        // Token expired / jwt_version bumped / account suspended. Drop the
+        // dead session so other consumers stop retrying with it.
+        clearSession();
+        setServerItems([]);
+        return;
+      }
       if (!res.ok) {
         setServerItems([]);
         return;
@@ -98,7 +105,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     } finally {
       setLoading(false);
     }
-  }, [customer?.id]);
+  }, [customer?.id, clearSession]);
 
   const refreshCart = useCallback(async () => {
     if (accessToken) {

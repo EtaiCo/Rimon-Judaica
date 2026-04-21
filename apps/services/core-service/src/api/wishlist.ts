@@ -15,7 +15,7 @@ router.get("/", requireCustomerAuth, async (req, res) => {
     return;
   }
 
-  const customerId = req.customerId!;
+  const customerId = req.customer!.id;
 
   const { data: wishRows, error: wishErr } = await supabaseAdmin
     .from("wishlist")
@@ -121,7 +121,7 @@ router.post("/", requireCustomerAuth, async (req, res) => {
     return;
   }
 
-  const customerId = req.customerId!;
+  const customerId = req.customer!.id;
 
   const { data: variantCheck, error: varCheckErr } = await supabaseAdmin
     .from("product_variants")
@@ -171,7 +171,7 @@ router.delete("/:id", requireCustomerAuth, async (req, res) => {
     return;
   }
 
-  const customerId = req.customerId!;
+  const customerId = req.customer!.id;
 
   const { data: deleted, error: delErr } = await supabaseAdmin
     .from("wishlist")

@@ -46,7 +46,7 @@ router.post("/add", requireCustomerAuth, async (req, res) => {
     qty = n;
   }
 
-  const customerId = req.customerId!;
+  const customerId = req.customer!.id;
 
   const { data, error } = await supabaseAdmin.rpc("add_cart_item", {
     p_user_id: customerId,
@@ -103,7 +103,7 @@ router.get("/", requireCustomerAuth, async (req, res) => {
     return;
   }
 
-  const customerId = req.customerId!;
+  const customerId = req.customer!.id;
 
   const { data: cartRows, error: cartErr } = await supabaseAdmin
     .from("cart_items")
@@ -219,7 +219,7 @@ router.patch("/line/:id", requireCustomerAuth, async (req, res) => {
     amount = n;
   }
 
-  const customerId = req.customerId!;
+  const customerId = req.customer!.id;
 
   const { data, error } = await supabaseAdmin.rpc("decrement_cart_item", {
     p_user_id: customerId,
@@ -270,7 +270,7 @@ router.delete("/line/:id", requireCustomerAuth, async (req, res) => {
     return;
   }
 
-  const customerId = req.customerId!;
+  const customerId = req.customer!.id;
 
   const { data, error } = await supabaseAdmin.rpc("remove_cart_item", {
     p_user_id: customerId,

@@ -4,6 +4,9 @@ export type Category = {
   slug: string;
   parentId: string | null;
   imageUrl?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  sortOrder?: number;
   children?: Category[];
   subCategories?: SubCategory[];
 };
@@ -19,9 +22,14 @@ export type SubCategory = {
 export type Product = {
   id: string;
   categoryId: string;
+  subCategoryId?: string | null;
   name: string;
   slug: string;
   description: string;
+  images: string[];
+  isActive: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
   createdAt: string;
 };
 
@@ -33,6 +41,11 @@ export type ProductVariant = {
   stockQuantity: number;
   sku: string;
   imageUrl?: string;
+  size?: string;
+  color?: string;
+  material?: string;
+  lowStockThreshold?: number;
+  isActive?: boolean;
 };
 
 export type ProductWithVariants = Product & {

@@ -1,15 +1,23 @@
 import { useState, type SubmitEvent } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { Button, Input } from "@rimon/design-system";
 import { Layout } from "../components/Layout/Layout";
 import { useAuth } from "../auth/AuthContext";
 import { apiUrl } from "../lib/api";
+
+function safeNext(raw: string | null): string {
+  if (!raw) return "/";
+  if (!raw.startsWith("/") || raw.startsWith("//")) return "/";
+  return raw;
+}
 import shared from "./authShared.module.css";
 import "./LoginPage.module.css";
 
 export function LoginPage() {
   const { customer, isReady, setSession } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const nextPath = safeNext(searchParams.get("next"));
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,7 +25,7 @@ export function LoginPage() {
   const [success, setSuccess] = useState(false);
 
   if (isReady && customer) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={nextPath} replace />;
   }
 
   async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
@@ -58,13 +66,15 @@ export function LoginPage() {
           email: String(c.email),
           phone: String(c.phone),
           customer_type: c.customer_type as "private" | "wholesale",
+          role: c.role === "admin" ? "admin" : "customer",
+          status: c.status === "suspended" ? "suspended" : "active",
           created_at: String(c.created_at),
           last_login:
             typeof c.last_login === "string" ? c.last_login : undefined,
         },
       });
       setSuccess(true);
-      window.setTimeout(() => navigate("/", { replace: true }), 1100);
+      window.setTimeout(() => navigate(nextPath, { replace: true }), 1100);
     } catch {
       setError("לא ניתן להתחבר לשרת. בדקו את החיבור.");
     } finally {

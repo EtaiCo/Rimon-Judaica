@@ -1,0 +1,67 @@
+.wrap {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.table th,
+.table td {
+  padding: var(--space-sm) var(--space-md);
+  text-align: inline-start;
+  border-block-end: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.table thead th {
+  background: var(--color-gray-100);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: var(--font-size-xs);
+}
+
+.table tbody tr:hover {
+  background: var(--color-cream);
+}
+
+.rowClickable {
+  cursor: pointer;
+}
+
+.empty {
+  padding: var(--space-2xl);
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  border-block-start: 1px solid var(--color-border);
+  background: var(--color-gray-100);
+  gap: var(--space-md);
+  font-size: var(--font-size-sm);
+}
+
+.paginationBtn {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+}
+
+.paginationBtn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

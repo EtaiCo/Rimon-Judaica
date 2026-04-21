@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { CategoryPage } from "./pages/CategoryPage";
@@ -9,6 +10,11 @@ import { AccountPage } from "./pages/AccountPage";
 import { OrderDetailPage } from "./pages/OrderDetailPage";
 import { SubCategoryPage } from "./pages/SubCategoryPage";
 import { SearchPage } from "./pages/SearchPage";
+import { RequireAdmin } from "./auth/RequireAdmin";
+
+const AdminApp = lazy(() =>
+  import("@/admin/AdminApp").then((m) => ({ default: m.AdminApp })),
+);
 
 export function App() {
   return (
@@ -26,6 +32,16 @@ export function App() {
       <Route path="/account/orders/:orderId" element={<OrderDetailPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route
+        path="/admin/*"
+        element={
+          <RequireAdmin>
+            <Suspense fallback={<div style={{ padding: 32 }}>טוען…</div>}>
+              <AdminApp />
+            </Suspense>
+          </RequireAdmin>
+        }
+      />
     </Routes>
   );
 }

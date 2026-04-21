@@ -39,7 +39,10 @@ router.get("/", async (_req, res) => {
 
   const { data: productRows, error: prodErr } = await supabaseAdmin
     .from("products")
-    .select("id, category_id, name, slug, description, created_at")
+    .select(
+      "id, category_id, sub_category_id, name, slug, description, images, is_active, seo_title, seo_description, created_at",
+    )
+    .eq("is_active", true)
     .order("created_at", { ascending: false });
 
   if (prodErr) {
@@ -75,9 +78,14 @@ router.get("/", async (_req, res) => {
     return {
       id: p.id,
       categoryId: p.category_id,
+      subCategoryId: p.sub_category_id ?? null,
       name: p.name,
       slug: p.slug,
       description: p.description,
+      images: Array.isArray(p.images) ? (p.images as string[]) : [],
+      isActive: p.is_active ?? true,
+      seoTitle: p.seo_title ?? undefined,
+      seoDescription: p.seo_description ?? undefined,
       createdAt: p.created_at,
       variants,
       minPrice: prices.length > 0 ? Math.min(...prices) : undefined,
@@ -105,7 +113,9 @@ router.get("/:id", async (req, res) => {
 
   const { data: productRow, error: prodErr } = await supabaseAdmin
     .from("products")
-    .select("id, category_id, name, slug, description, created_at")
+    .select(
+      "id, category_id, sub_category_id, name, slug, description, images, is_active, seo_title, seo_description, created_at",
+    )
     .eq("id", id)
     .maybeSingle();
 
@@ -136,9 +146,16 @@ router.get("/:id", async (req, res) => {
   const product: ProductWithVariants = {
     id: productRow.id,
     categoryId: productRow.category_id,
+    subCategoryId: productRow.sub_category_id ?? null,
     name: productRow.name,
     slug: productRow.slug,
     description: productRow.description ?? "",
+    images: Array.isArray(productRow.images)
+      ? (productRow.images as string[])
+      : [],
+    isActive: productRow.is_active ?? true,
+    seoTitle: productRow.seo_title ?? undefined,
+    seoDescription: productRow.seo_description ?? undefined,
     createdAt: productRow.created_at,
     variants,
     minPrice: prices.length > 0 ? Math.min(...prices) : undefined,

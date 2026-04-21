@@ -123,6 +123,8 @@ export function RegisterPage() {
           email: String(c.email),
           phone: String(c.phone),
           customer_type: c.customer_type as CustomerType,
+          role: c.role === "admin" ? "admin" : "customer",
+          status: c.status === "suspended" ? "suspended" : "active",
           created_at: String(c.created_at),
           last_login:
             typeof c.last_login === "string" ? c.last_login : undefined,
